@@ -74,21 +74,6 @@
             background-color: rgba(124, 58, 237, 0.08);
         }
 
-        .nav-active {
-            color: white;
-            position: relative;
-        }
-        
-        .nav-active:after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, #7C3AED, #D946EF);
-        }
-
         .modal {
             animation: modalPop 0.2s ease-out forwards;
         }
@@ -121,13 +106,6 @@
         .leaflet-popup-tip {
             background: #18181b;
             border: 1px solid #3f3f46;
-        }
-
-        .fuel-pill {
-            font-size: 0.75rem;
-            padding: 1px 10px;
-            border-radius: 9999px;
-            font-weight: 600;
         }
 
         .metric-value {
@@ -171,20 +149,11 @@
 
                 <div class="flex items-center gap-x-3">
                     <button onclick="abrirModalAtualizacao()"
-                            class="hidden md:flex items-center gap-x-2 px-5 py-2.5 rounded-2xl text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10 transition-all active:scale-[0.985]">
+                            class="flex items-center gap-x-2 px-5 py-2.5 rounded-2xl text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10 transition-all active:scale-[0.985]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                         <span>Sou dono de posto</span>
-                    </button>
-                    
-                    <button onclick="contatarWhatsApp()"
-                            class="flex items-center gap-x-2 px-5 py-2.5 rounded-2xl text-sm font-semibold bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 transition-all active:scale-[0.985] shadow-lg shadow-violet-950/30">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.67-.966-.92-1.314-.25-.348-.5-.298-.67-.298-.17 0-.446.074-.67.372-.223.298-.866 1.068-.866 2.605 0 1.537 1.018 3.02 1.168 3.218.149.198 2.02 3.08 4.89 4.223.68.298 1.21.473 1.62.606.68.148 1.3.127 1.79.077.546-.07 1.66-.68 1.89-1.34.23-.66.23-1.23.16-1.35-.07-.12-.25-.19-.52-.33z"/>
-                            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.44 5.16L2 22l4.92-1.28A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
-                        </svg>
-                        <span class="hidden sm:inline">WhatsApp</span>
                     </button>
                 </div>
             </div>
@@ -460,14 +429,13 @@
                     
                     <div class="mt-6 text-xs text-zinc-500">
                         © 2026 • Todos os direitos reservados<br>
-                        <span class="text-violet-400">Desenvolvido por</span> <span class="font-medium">Lumina Digital</span>
+                        <span class="text-violet-400">Desenvolvido por</span> <span class="font-medium">Martins Web</span>
                     </div>
                 </div>
                 
-                <div class="text-right text-xs text-zinc-400 space-y-1">
-                    <div>WhatsApp: <span class="font-mono text-white">+55 11 97532-1113</span></div>
-                    <div>davidmartins1399@gmail.com</div>
-                    <div class="pt-2">Recife, Pernambuco — Brasil</div>
+                <div class="text-right text-xs text-zinc-400">
+                    <div>Recife, Pernambuco — Brasil</div>
+                    <div class="pt-1 text-zinc-500">© 2026 Martins Web</div>
                 </div>
             </div>
         </div>
@@ -722,12 +690,10 @@
         let marcadores = [];
         let ordemAtual = { coluna: null, asc: true };
 
-        // ==================== TAILWIND CONFIG ====================
         function configurarTailwind() {
             document.documentElement.style.setProperty('--accent-violet', '#7C3AED');
         }
 
-        // ==================== RENDER TABELA ====================
         function renderizarTabela(dados = postos) {
             const tbody = document.getElementById('tabela-body');
             tbody.innerHTML = '';
@@ -775,7 +741,6 @@
             document.getElementById('contador-postos').textContent = dados.length;
         }
 
-        // ==================== FILTRAR TABELA ====================
         function filtrarTabela() {
             const termo = document.getElementById('search-input').value.toLowerCase().trim();
             
@@ -797,12 +762,10 @@
             renderizarTabela(postos);
         }
 
-        // ==================== ORDERNAR TABELA ====================
         function ordenarTabela(coluna) {
             const tbody = document.getElementById('tabela-body');
             const linhas = Array.from(tbody.querySelectorAll('tr'));
             
-            // Determinar direção
             if (ordemAtual.coluna === coluna) {
                 ordemAtual.asc = !ordemAtual.asc;
             } else {
@@ -810,16 +773,14 @@
                 ordemAtual.asc = true;
             }
             
-            // Função de ordenação
             linhas.sort((a, b) => {
                 let valA, valB;
                 
-                if (coluna === 0) { // Nome / Bairro
+                if (coluna === 0) {
                     valA = a.cells[0].textContent.trim();
                     valB = b.cells[0].textContent.trim();
                     return ordemAtual.asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
                 } else {
-                    // Colunas de preço (1-4)
                     const textoA = a.cells[coluna].textContent.trim().replace('R$', '').replace(',', '.').replace('—', '999');
                     const textoB = b.cells[coluna].textContent.trim().replace('R$', '').replace(',', '.').replace('—', '999');
                     
@@ -830,34 +791,27 @@
                 }
             });
             
-            // Reordenar DOM
             linhas.forEach(linha => tbody.appendChild(linha));
         }
 
-        // ==================== MAPA LEAFLET ====================
         function inicializarMapa() {
-            // Coordenadas centrais de Recife
             mapa = L.map('map', {
                 zoomControl: false,
                 attributionControl: false
             }).setView([-8.05, -34.90], 11);
             
-            // Tile layer escuro bonito (CartoDB Dark Matter)
             L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                 maxZoom: 19
             }).addTo(mapa);
             
-            // Adicionar marcadores
             adicionarMarcadores();
             
-            // Adicionar controle de zoom bonito
             L.control.zoom({
                 position: 'bottomright'
             }).addTo(mapa);
         }
         
         function adicionarMarcadores() {
-            // Limpar marcadores anteriores
             marcadores.forEach(m => mapa.removeLayer(m));
             marcadores = [];
             
@@ -910,13 +864,11 @@
             
             mapa.flyTo([posto.lat, posto.lng], 15, { duration: 0.8 });
             
-            // Abrir popup do marcador correspondente
             setTimeout(() => {
                 const marker = marcadores.find(m => m.postoId === id);
                 if (marker) marker.openPopup();
             }, 900);
             
-            // Scroll suave até o mapa
             document.getElementById('mapa').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         
@@ -925,7 +877,6 @@
             adicionarMarcadores();
         }
 
-        // ==================== MODAL DE ATUALIZAÇÃO ====================
         function preencherSelectPostos() {
             const select = document.getElementById('select-posto');
             select.innerHTML = '<option value="">Selecione seu posto...</option>';
@@ -943,7 +894,6 @@
             const id = parseInt(select.value);
             
             if (!id) {
-                // Limpar campos
                 document.getElementById('preco-gasolina').value = '';
                 document.getElementById('preco-etanol').value = '';
                 document.getElementById('preco-diesel').value = '';
@@ -965,16 +915,13 @@
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
-            // Preencher select se ainda não foi
             const select = document.getElementById('select-posto');
             if (select.options.length <= 1) {
                 preencherSelectPostos();
             }
             
-            // Atualizar horário
             atualizarHorarioModal();
             
-            // Focar no select
             setTimeout(() => {
                 select.focus();
             }, 300);
@@ -1004,7 +951,6 @@
             const postoIndex = postos.findIndex(p => p.id === id);
             if (postoIndex === -1) return;
             
-            // Pegar valores
             const gasolina = parseFloat(document.getElementById('preco-gasolina').value.replace(',', '.'));
             const etanol = parseFloat(document.getElementById('preco-etanol').value.replace(',', '.'));
             const diesel = parseFloat(document.getElementById('preco-diesel').value.replace(',', '.'));
@@ -1016,32 +962,26 @@
                 return;
             }
             
-            // Atualizar dados
             postos[postoIndex].gasolina = gasolina;
             postos[postoIndex].etanol = etanol;
             postos[postoIndex].diesel = diesel;
             postos[postoIndex].gnv = gnv;
             
-            // Atualizar timestamp
             const agora = new Date();
             postos[postoIndex].atualizado = agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             
-            // Re-renderizar tudo
             renderizarTabela(postos);
             atualizarMapa();
             
-            // Fechar modal e mostrar toast
             fecharModal();
-            mostrarToast('Preços atualizados com sucesso!', 'A tabela e o mapa foram atualizados em tempo real. No ambiente de produção, isso salvaria automaticamente no arquivo data.js.');
+            mostrarToast('Preços atualizados com sucesso!', 'A tabela e o mapa foram atualizados em tempo real.');
             
-            // Opcional: destacar a linha atualizada
             setTimeout(() => {
                 const linhas = document.querySelectorAll('#tabela-body tr');
                 linhas.forEach(linha => {
                     if (linha.textContent.includes(postos[postoIndex].nome)) {
                         linha.style.transition = 'background-color 0.1s';
                         linha.style.backgroundColor = 'rgba(124, 58, 237, 0.15)';
-                        
                         setTimeout(() => {
                             linha.style.backgroundColor = '';
                         }, 2200);
@@ -1050,7 +990,6 @@
             }, 600);
         }
         
-        // ==================== TOAST ====================
         function mostrarToast(titulo, mensagem) {
             const container = document.getElementById('toast-container');
             document.getElementById('toast-titulo').textContent = titulo;
@@ -1071,7 +1010,6 @@
             }, 5200);
         }
         
-        // ==================== EXPORTAR DATA.JS ====================
         function exportarDataJS() {
             const dataStr = `// data.js — Preços atualizados em ${new Date().toLocaleString('pt-BR')}\nconst postos = ${JSON.stringify(postos, null, 4)};`;
             
@@ -1086,21 +1024,12 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            // Também mostrar no console para cópia fácil
             console.log('%c[Combustíveis Cotação] Copie o conteúdo abaixo para o arquivo data.js:', 'color:#a1a1aa');
             console.log(dataStr);
             
-            mostrarToast('data.js exportado!', 'Arquivo baixado. No projeto real, o backend ou script de atualização usaria esse arquivo.');
+            mostrarToast('data.js exportado!', 'Arquivo baixado com sucesso.');
         }
         
-        // ==================== WHATSAPP ====================
-        function contatarWhatsApp() {
-            const numero = '5511975321113';
-            const mensagem = encodeURIComponent('Olá! Gostaria de saber mais sobre o sistema de cotação de combustíveis da Lumina Digital.');
-            window.open(`https://wa.me/\( {numero}?text= \){mensagem}`, '_blank');
-        }
-        
-        // ==================== COMO FUNCIONA ====================
         function mostrarComoFunciona() {
             const modalHTML = `
                 <div class="fixed inset-0 z-[110] bg-black/80 flex items-center justify-center p-6" onclick="this.remove()">
@@ -1110,7 +1039,7 @@
                         <div class="space-y-6 text-sm text-zinc-300">
                             <div class="flex gap-4">
                                 <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">1</div>
-                                <div>O dono do posto acessa o painel (ou envia os preços por WhatsApp para a equipe Lumina).</div>
+                                <div>O dono do posto acessa o painel (ou envia os preços por WhatsApp para a equipe Martins Web).</div>
                             </div>
                             <div class="flex gap-4">
                                 <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">2</div>
@@ -1135,7 +1064,6 @@
             document.body.insertAdjacentHTML('beforeend', modalHTML);
         }
         
-        // ==================== ATUALIZAR TEMPO ====================
         function iniciarContadorTempo() {
             const el = document.getElementById('tempo-atualizado');
             if (!el) return;
@@ -1149,25 +1077,17 @@
             }, 60000);
         }
         
-        // ==================== INICIALIZAÇÃO ====================
         function inicializar() {
             configurarTailwind();
-            
-            // Renderizar tabela inicial
             renderizarTabela();
             
-            // Inicializar mapa
             setTimeout(() => {
                 inicializarMapa();
             }, 800);
             
-            // Preencher select do modal
             preencherSelectPostos();
-            
-            // Iniciar contador de tempo
             iniciarContadorTempo();
             
-            // Atalho de teclado: pressionar "?" abre modal
             document.addEventListener('keydown', function(e) {
                 if (e.key === '?' && document.activeElement.tagName === 'BODY') {
                     e.preventDefault();
@@ -1175,20 +1095,11 @@
                 }
             });
             
-            // Dica no console
             console.log('%c[Combustíveis Cotação] Protótipo carregado com sucesso. Pressione "?" para abrir o painel de atualização.', 'color:#64748b');
-            
-            // Mostrar toast de boas-vindas sutil (apenas uma vez)
-            setTimeout(() => {
-                // Comentado para não poluir — descomente se quiser
-                // mostrarToast('Bem-vindo!', 'Este é um protótipo completo e funcional. Teste a atualização de preços!');
-            }, 4500);
         }
         
-        // Iniciar tudo quando a página carregar
         window.onload = inicializar;
         
-        // Expor algumas funções úteis no console para debug
         window.CombustiveisCotacao = {
             atualizarPreco: (id, campo, valor) => {
                 const p = postos.find(x => x.id === id);
