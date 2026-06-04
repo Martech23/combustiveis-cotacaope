@@ -1034,29 +1034,33 @@
             const modalHTML = `
                 <div class="fixed inset-0 z-[110] bg-black/80 flex items-center justify-center p-6" onclick="this.remove()">
                     <div onclick="event.stopImmediatePropagation()" class="max-w-lg w-full glass border border-white/10 rounded-3xl p-9">
-                        <h3 class="font-display text-3xl tracking-tight mb-6">Como funciona a atualização?</h3>
+                        <h3 class="font-display text-3xl tracking-tight mb-6">Como funciona para donos de posto</h3>
                         
-                        <div class="space-y-6 text-sm text-zinc-300">
+                        <div class="space-y-5 text-sm text-zinc-300">
                             <div class="flex gap-4">
                                 <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">1</div>
-                                <div>O dono do posto acessa o painel (ou envia os preços por WhatsApp para a equipe Martins Web).</div>
+                                <div>Cadastre seu posto na plataforma de forma simples e rápida.</div>
                             </div>
                             <div class="flex gap-4">
                                 <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">2</div>
-                                <div>Os preços são salvos no arquivo <span class="font-mono text-violet-400">data.js</span> (ou enviados para uma API simples).</div>
+                                <div>Atualize seus preços quantas vezes quiser pelo painel ou por WhatsApp.</div>
                             </div>
                             <div class="flex gap-4">
                                 <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">3</div>
-                                <div>O site atualiza automaticamente (ou com refresh simples). Funciona excelente em hospedagem estática (Vercel, Hostinger, Netlify).</div>
+                                <div>Seus preços aparecem em tempo real para motoristas de Recife e região.</div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">4</div>
+                                <div>Aumente a visibilidade do seu posto por uma <strong class="text-white">taxa mensal acessível</strong>.</div>
                             </div>
                         </div>
                         
-                        <div class="mt-8 pt-6 border-t border-white/10 text-xs text-zinc-400">
-                            Este protótipo simula o fluxo completo. Em produção, podemos integrar com WhatsApp Business API + Google Sheets ou banco de dados leve.
+                        <div class="mt-8 pt-6 border-t border-white/10 text-sm text-zinc-300">
+                            Entre em contato com a <strong>Martins Web</strong> para conhecer os planos e começar a aparecer hoje mesmo.
                         </div>
                         
                         <button onclick="this.closest('.fixed').remove()" class="mt-8 w-full py-3.5 rounded-2xl border border-white/20 hover:bg-white/5 text-sm font-medium transition-colors">
-                            Entendi, fechar
+                            Fechar
                         </button>
                     </div>
                 </div>
