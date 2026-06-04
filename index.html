@@ -10,11 +10,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
         
-        :root {
-            --violet: #7C3AED;
-            --fuchsia: #D946EF;
-        }
-        
         body {
             font-family: 'Inter', system_ui, sans-serif;
         }
@@ -31,7 +26,7 @@
         }
 
         .premium-gradient {
-            background: linear-gradient(135deg, #7C3AED 0%, #D946EF 100%);
+            background: linear-gradient(135deg, #1E3A8A 0%, #DC2626 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -63,7 +58,7 @@
         }
         
         .data-table th:hover {
-            color: #D946EF;
+            color: #DC2626;
         }
 
         .data-table tr {
@@ -71,7 +66,7 @@
         }
         
         .data-table tr:hover {
-            background-color: rgba(124, 58, 237, 0.08);
+            background-color: rgba(220, 38, 38, 0.08);
         }
 
         .modal {
@@ -124,12 +119,12 @@
                 <div class="flex items-center gap-x-3">
                     <!-- Logo -->
                     <div class="flex items-center gap-x-2.5">
-                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-950/50">
+                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-700 to-red-600 flex items-center justify-center shadow-lg shadow-red-950/50">
                             <span class="text-white text-3xl">⛽</span>
                         </div>
                         <div>
                             <span class="font-display text-3xl font-semibold tracking-tighter">Combustíveis</span>
-                            <span class="font-display text-3xl font-semibold tracking-tighter bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Cotação</span>
+                            <span class="font-display text-3xl font-semibold tracking-tighter bg-gradient-to-r from-blue-400 to-red-500 bg-clip-text text-transparent">Cotação</span>
                         </div>
                     </div>
                     <div class="hidden md:flex items-center gap-x-1.5 pl-4 border-l border-white/10">
@@ -186,7 +181,7 @@
                 </button>
                 
                 <button onclick="abrirModalAtualizacao()" 
-                        class="px-8 py-4 rounded-3xl border border-white/20 hover:bg-white/5 font-semibold text-lg flex items-center gap-x-3 transition-all">
+                        class="px-8 py-4 rounded-3xl border border-red-500/30 hover:bg-red-950/30 text-red-400 font-semibold text-lg flex items-center gap-x-3 transition-all">
                     <span>Sou dono de posto</span>
                 </button>
             </div>
@@ -208,7 +203,7 @@
     <div id="precos" class="max-w-screen-2xl mx-auto px-8 pb-16">
         <div class="flex items-end justify-between mb-8">
             <div>
-                <span class="uppercase tracking-[3px] text-xs font-semibold text-violet-400">MÉDIA DE MERCADO</span>
+                <span class="uppercase tracking-[3px] text-xs font-semibold text-red-400">MÉDIA DE MERCADO</span>
                 <h2 class="section-header tracking-tighter">Preços médios hoje</h2>
             </div>
             <div class="text-right hidden md:block">
@@ -303,7 +298,7 @@
     <div id="postos" class="max-w-screen-2xl mx-auto px-8 pb-16">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4 mb-6">
             <div>
-                <span class="uppercase tracking-[3px] text-xs font-semibold text-violet-400">TRANSPARÊNCIA TOTAL</span>
+                <span class="uppercase tracking-[3px] text-xs font-semibold text-red-400">TRANSPARÊNCIA TOTAL</span>
                 <h2 class="section-header tracking-tighter">Postos em Recife e região</h2>
             </div>
             
@@ -313,7 +308,7 @@
                            type="text" 
                            placeholder="Buscar posto ou bairro..." 
                            oninput="filtrarTabela()"
-                           class="w-full bg-zinc-900 border border-white/10 focus:border-violet-500/50 transition-colors rounded-2xl pl-11 py-3 text-sm outline-none">
+                           class="w-full bg-zinc-900 border border-white/10 focus:border-red-500/50 transition-colors rounded-2xl pl-11 py-3 text-sm outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-4 top-3.5 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z" />
                     </svg>
@@ -345,15 +340,8 @@
             </table>
         </div>
         
-        <div class="flex justify-between items-center mt-4 px-1 text-xs text-zinc-500">
-            <div>Mostrando <span id="contador-postos">12</span> postos • Clique nos cabeçalhos para ordenar</div>
-            <button onclick="exportarDataJS()" 
-                    class="flex items-center gap-x-2 text-violet-400 hover:text-violet-300 transition-colors">
-                <span>Exportar dados para data.js</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v-4m0 0l4 4m-4-4l4-4m12 0v4m0 0l-4-4m4 4l-4 4" />
-                </svg>
-            </button>
+        <div class="mt-4 px-1 text-xs text-zinc-500">
+            Mostrando <span id="contador-postos">12</span> postos • Clique nos cabeçalhos para ordenar
         </div>
     </div>
 
@@ -361,7 +349,7 @@
     <div id="mapa" class="max-w-screen-2xl mx-auto px-8 pb-20">
         <div class="mb-6 flex items-end justify-between">
             <div>
-                <span class="uppercase tracking-[3px] text-xs font-semibold text-violet-400">VISÃO GEOGRÁFICA</span>
+                <span class="uppercase tracking-[3px] text-xs font-semibold text-red-400">VISÃO GEOGRÁFICA</span>
                 <h2 class="section-header tracking-tighter">Mapa dos postos</h2>
             </div>
             <div class="text-xs px-4 py-2 rounded-2xl bg-white/5 border border-white/10 text-zinc-400 hidden md:block">
@@ -379,18 +367,18 @@
         <div class="glass rounded-3xl border border-white/10 p-10 md:p-14">
             <div class="grid md:grid-cols-12 gap-x-12 gap-y-8 items-center">
                 <div class="md:col-span-7">
-                    <span class="px-4 py-1 text-xs font-semibold tracking-widest bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 text-violet-300 rounded-full">PARA DONOS DE POSTO</span>
+                    <span class="px-4 py-1 text-xs font-semibold tracking-widest bg-gradient-to-r from-red-500/20 to-red-600/20 text-red-300 rounded-full">PARA DONOS DE POSTO</span>
                     
                     <h2 class="text-5xl tracking-tighter font-display mt-3 leading-none">Atualize seus preços<br>em menos de 30 segundos.</h2>
                     
                     <p class="mt-5 text-lg text-zinc-400 max-w-md">
                         Mantenha seus clientes informados. Os preços são atualizados instantaneamente 
-                        no site e no app. Funciona 100% offline via data.js.
+                        no site para todos os motoristas.
                     </p>
                     
                     <div class="mt-8 flex flex-wrap gap-4">
                         <button onclick="abrirModalAtualizacao()" 
-                                class="px-9 py-4 rounded-3xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold flex items-center justify-center gap-x-3 hover:brightness-110 active:scale-[0.985] transition-all text-lg shadow-xl shadow-violet-950/40">
+                                class="px-9 py-4 rounded-3xl bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold flex items-center justify-center gap-x-3 hover:brightness-110 active:scale-[0.985] transition-all text-lg shadow-xl shadow-red-950/40">
                             Abrir painel de atualização
                         </button>
                         
@@ -408,8 +396,8 @@
                             <li class="flex gap-x-3"><span class="text-emerald-400 mt-1">→</span> Atualização em tempo real no site</li>
                             <li class="flex gap-x-3"><span class="text-emerald-400 mt-1">→</span> Histórico de alterações salvo automaticamente</li>
                             <li class="flex gap-x-3"><span class="text-emerald-400 mt-1">→</span> Notificação para clientes via WhatsApp</li>
-                            <li class="flex gap-x-3"><span class="text-emerald-400 mt-1">→</span> Exportação simples para data.js (produção)</li>
-                            <li class="flex gap-x-3"><span class="text-emerald-400 mt-1">→</span> Sem necessidade de sistema complexo</li>
+                            <li class="flex gap-x-3"><span class="text-emerald-400 mt-1">→</span> Aumento de visibilidade para motoristas da região</li>
+                            <li class="flex gap-x-3"><span class="text-emerald-400 mt-1">→</span> Apenas R$ 49,90 por mês</li>
                         </ul>
                     </div>
                 </div>
@@ -429,7 +417,7 @@
                     
                     <div class="mt-6 text-xs text-zinc-500">
                         © 2026 • Todos os direitos reservados<br>
-                        <span class="text-violet-400">Desenvolvido por</span> <span class="font-medium">Martins Web</span>
+                        <span class="text-red-400">Desenvolvido por</span> <span class="font-medium">Martins Web</span>
                     </div>
                 </div>
                 
@@ -458,7 +446,7 @@
                 <div>
                     <label class="block text-xs tracking-widest text-zinc-400 mb-2 font-medium">SEU POSTO</label>
                     <select id="select-posto" onchange="preencherPrecosAtuais()" 
-                            class="w-full bg-zinc-900 border border-white/10 focus:border-violet-500 rounded-2xl px-5 py-3.5 text-sm outline-none">
+                            class="w-full bg-zinc-900 border border-white/10 focus:border-red-500 rounded-2xl px-5 py-3.5 text-sm outline-none">
                         <!-- Opções preenchidas via JS -->
                     </select>
                 </div>
@@ -470,7 +458,7 @@
                         <div class="relative">
                             <span class="absolute left-5 top-3.5 text-zinc-500">R$</span>
                             <input id="preco-gasolina" type="text" inputmode="decimal" 
-                                   class="w-full bg-zinc-900 border border-white/10 focus:border-violet-500 rounded-2xl pl-11 py-3 text-lg font-semibold outline-none">
+                                   class="w-full bg-zinc-900 border border-white/10 focus:border-red-500 rounded-2xl pl-11 py-3 text-lg font-semibold outline-none">
                         </div>
                     </div>
                     
@@ -480,7 +468,7 @@
                         <div class="relative">
                             <span class="absolute left-5 top-3.5 text-zinc-500">R$</span>
                             <input id="preco-etanol" type="text" inputmode="decimal" 
-                                   class="w-full bg-zinc-900 border border-white/10 focus:border-violet-500 rounded-2xl pl-11 py-3 text-lg font-semibold outline-none">
+                                   class="w-full bg-zinc-900 border border-white/10 focus:border-red-500 rounded-2xl pl-11 py-3 text-lg font-semibold outline-none">
                         </div>
                     </div>
                     
@@ -490,7 +478,7 @@
                         <div class="relative">
                             <span class="absolute left-5 top-3.5 text-zinc-500">R$</span>
                             <input id="preco-diesel" type="text" inputmode="decimal" 
-                                   class="w-full bg-zinc-900 border border-white/10 focus:border-violet-500 rounded-2xl pl-11 py-3 text-lg font-semibold outline-none">
+                                   class="w-full bg-zinc-900 border border-white/10 focus:border-red-500 rounded-2xl pl-11 py-3 text-lg font-semibold outline-none">
                         </div>
                     </div>
                     
@@ -500,7 +488,7 @@
                         <div class="relative">
                             <span class="absolute left-5 top-3.5 text-zinc-500">R$</span>
                             <input id="preco-gnv" type="text" inputmode="decimal" 
-                                   class="w-full bg-zinc-900 border border-white/10 focus:border-violet-500 rounded-2xl pl-11 py-3 text-lg font-semibold outline-none">
+                                   class="w-full bg-zinc-900 border border-white/10 focus:border-red-500 rounded-2xl pl-11 py-3 text-lg font-semibold outline-none">
                         </div>
                     </div>
                 </div>
@@ -512,11 +500,11 @@
                     </div>
                     
                     <button onclick="salvarAtualizacao()" 
-                            class="w-full py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:brightness-110 active:scale-[0.985] font-semibold text-lg transition-all">
+                            class="w-full py-4 rounded-3xl bg-gradient-to-r from-red-600 to-red-700 hover:brightness-110 active:scale-[0.985] font-semibold text-lg transition-all">
                         Salvar e publicar preços
                     </button>
                     
-                    <p class="text-center text-[10px] text-zinc-500 mt-4">Os novos preços aparecerão instantaneamente na tabela e no mapa.</p>
+                    <p class="text-center text-[10px] text-zinc-500 mt-4">Os novos preços aparecem instantaneamente no site.</p>
                 </div>
             </div>
         </div>
@@ -532,7 +520,7 @@
             </div>
             <div>
                 <div id="toast-titulo" class="font-semibold">Preços atualizados com sucesso!</div>
-                <div id="toast-mensagem" class="text-xs text-emerald-300/90">A tabela e o mapa foram atualizados.</div>
+                <div id="toast-mensagem" class="text-xs text-emerald-300/90">A tabela e o mapa foram atualizados em tempo real.</div>
             </div>
         </div>
     </div>
@@ -691,7 +679,7 @@
         let ordemAtual = { coluna: null, asc: true };
 
         function configurarTailwind() {
-            document.documentElement.style.setProperty('--accent-violet', '#7C3AED');
+            document.documentElement.style.setProperty('--accent-red', '#DC2626');
         }
 
         function renderizarTabela(dados = postos) {
@@ -726,7 +714,7 @@
                     </td>
                     <td class="px-3 py-5">
                         <button onclick="centralizarNoMapa(${posto.id}); event.stopImmediatePropagation();" 
-                                class="p-2 hover:bg-white/10 rounded-xl text-violet-400 hover:text-violet-300 transition-colors" title="Ver no mapa">
+                                class="p-2 hover:bg-white/10 rounded-xl text-red-400 hover:text-red-300 transition-colors" title="Ver no mapa">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314-11.314z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -820,7 +808,7 @@
                 
                 const icone = L.divIcon({
                     className: 'custom-marker',
-                    html: `<div style="background: linear-gradient(135deg, #7C3AED, #D946EF); width: 28px; height: 28px; border-radius: 9999px; border: 3px solid #18181b; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3); display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700;">⛽</div>`,
+                    html: `<div style="background: linear-gradient(135deg, #1E3A8A, #DC2626); width: 28px; height: 28px; border-radius: 9999px; border: 3px solid #18181b; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3); display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700;">⛽</div>`,
                     iconSize: [28, 28],
                     iconAnchor: [14, 14],
                     popupAnchor: [0, -16]
@@ -974,14 +962,14 @@
             atualizarMapa();
             
             fecharModal();
-            mostrarToast('Preços atualizados com sucesso!', 'A tabela e o mapa foram atualizados em tempo real.');
+            mostrarToast('Preços atualizados com sucesso!', 'Os preços foram atualizados em tempo real no site.');
             
             setTimeout(() => {
                 const linhas = document.querySelectorAll('#tabela-body tr');
                 linhas.forEach(linha => {
                     if (linha.textContent.includes(postos[postoIndex].nome)) {
                         linha.style.transition = 'background-color 0.1s';
-                        linha.style.backgroundColor = 'rgba(124, 58, 237, 0.15)';
+                        linha.style.backgroundColor = 'rgba(220, 38, 38, 0.15)';
                         setTimeout(() => {
                             linha.style.backgroundColor = '';
                         }, 2200);
@@ -1010,26 +998,6 @@
             }, 5200);
         }
         
-        function exportarDataJS() {
-            const dataStr = `// data.js — Preços atualizados em ${new Date().toLocaleString('pt-BR')}\nconst postos = ${JSON.stringify(postos, null, 4)};`;
-            
-            const blob = new Blob([dataStr], { type: 'text/javascript' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'data.js';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            console.log('%c[Combustíveis Cotação] Copie o conteúdo abaixo para o arquivo data.js:', 'color:#a1a1aa');
-            console.log(dataStr);
-            
-            mostrarToast('data.js exportado!', 'Arquivo baixado com sucesso.');
-        }
-        
         function mostrarComoFunciona() {
             const modalHTML = `
                 <div class="fixed inset-0 z-[110] bg-black/80 flex items-center justify-center p-6" onclick="this.remove()">
@@ -1038,25 +1006,25 @@
                         
                         <div class="space-y-5 text-sm text-zinc-300">
                             <div class="flex gap-4">
-                                <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">1</div>
-                                <div>Cadastre seu posto na plataforma de forma simples e rápida.</div>
+                                <div class="w-7 h-7 rounded-full bg-red-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">1</div>
+                                <div>Cadastre seu posto de forma simples e rápida.</div>
                             </div>
                             <div class="flex gap-4">
-                                <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">2</div>
-                                <div>Atualize seus preços quantas vezes quiser pelo painel ou por WhatsApp.</div>
+                                <div class="w-7 h-7 rounded-full bg-red-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">2</div>
+                                <div>Atualize seus preços a qualquer momento pelo painel ou WhatsApp.</div>
                             </div>
                             <div class="flex gap-4">
-                                <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">3</div>
-                                <div>Seus preços aparecem em tempo real para motoristas de Recife e região.</div>
+                                <div class="w-7 h-7 rounded-full bg-red-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">3</div>
+                                <div>Os preços são atualizados <strong class="text-white">em tempo real</strong> no site para todos os motoristas.</div>
                             </div>
                             <div class="flex gap-4">
-                                <div class="w-7 h-7 rounded-full bg-violet-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">4</div>
-                                <div>Aumente a visibilidade do seu posto por uma <strong class="text-white">taxa mensal acessível</strong>.</div>
+                                <div class="w-7 h-7 rounded-full bg-red-600 flex-shrink-0 flex items-center justify-center text-xs font-bold">4</div>
+                                <div>Alcance muito mais clientes e aumente suas vendas por apenas <strong class="text-yellow-400">R$ 49,90 por mês</strong>.</div>
                             </div>
                         </div>
                         
-                        <div class="mt-8 pt-6 border-t border-white/10 text-sm text-zinc-300">
-                            Entre em contato com a <strong>Martins Web</strong> para conhecer os planos e começar a aparecer hoje mesmo.
+                        <div class="mt-8 pt-6 border-t border-white/10 text-sm">
+                            <strong class="text-white">Com o sistema da Martins Web</strong>, seu posto aparece para milhares de motoristas da região todos os dias.
                         </div>
                         
                         <button onclick="this.closest('.fixed').remove()" class="mt-8 w-full py-3.5 rounded-2xl border border-white/20 hover:bg-white/5 text-sm font-medium transition-colors">
