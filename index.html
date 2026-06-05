@@ -11,12 +11,23 @@
         body { font-family: 'Inter', system_ui, sans-serif; background-color: #050507; }
         .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
         .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
-        .premium-gradient { background: linear-gradient(135deg, #00f3ff 0%, #ff2d55 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .premium-gradient { background: linear-gradient(135deg, #f59e0b 0%, #22d3ee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .section-header { font-size: 2.25rem; line-height: 2.5rem; font-weight: 700; letter-spacing: -0.03em; }
         .fuel-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .fuel-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4); border-color: rgba(255,255,255,0.15); }
-        .futuristic-border { border: 1px solid rgba(0, 243, 255, 0.15); }
-        .neon-text { text-shadow: 0 0 10px rgb(0 243 255 / 0.5); }
+        .futuristic-border { border: 1px solid rgba(245, 158, 11, 0.2); }
+        
+        .price-blink {
+            animation: pricePulse 2.2s ease-in-out infinite;
+        }
+        @keyframes pricePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.72; }
+        }
+        
+        .led-number {
+            text-shadow: 0 0 10px rgb(245 158 11 / 0.7), 0 0 20px rgb(245 158 11 / 0.4);
+        }
     </style>
 </head>
 <body class="bg-[#050507] text-zinc-200">
@@ -26,12 +37,12 @@
         <div class="max-w-screen-2xl mx-auto px-8 py-6 flex items-center justify-between">
             <div class="flex items-center gap-x-3">
                 <div class="flex items-center gap-x-3">
-                    <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-cyan-400 to-pink-500 flex items-center justify-center">
+                    <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-500 to-cyan-400 flex items-center justify-center">
                         <span class="text-white text-2xl">⛽</span>
                     </div>
                     <div>
                         <span class="font-display text-2xl font-semibold tracking-tighter">Combustíveis</span>
-                        <span class="font-display text-2xl font-semibold tracking-tighter bg-gradient-to-r from-cyan-400 to-pink-500 bg-clip-text text-transparent">Cotação</span>
+                        <span class="font-display text-2xl font-semibold tracking-tighter bg-gradient-to-r from-amber-400 to-cyan-400 bg-clip-text text-transparent">Cotação</span>
                     </div>
                 </div>
             </div>
@@ -58,18 +69,30 @@
                 </div>
             </div>
 
-            <!-- BOMBA 3D COM PLACA LED HORIZONTAL -->
+            <!-- BOMBA 3D COM LED HORIZONTAL PISCANDO -->
             <div class="md:col-span-5 mt-12 md:mt-0 flex justify-center">
                 <div class="relative" style="perspective: 1400px;">
                     <div class="fuel-pump-3d w-64 h-[340px] bg-gradient-to-br from-zinc-900 to-black rounded-3xl border border-white/10 futuristic-border relative overflow-hidden" style="transform: rotateY(-22deg) rotateX(8deg); box-shadow: 40px 40px 80px -20px rgb(0 0 0 / 0.6);">
                         
-                        <!-- PLACA LED HORIZONTAL -->
-                        <div class="absolute top-7 left-1/2 -translate-x-1/2 w-[210px] bg-[#0a0c0f] border border-cyan-500/30 rounded-2xl p-2 shadow-inner" style="box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 0 15px rgba(0, 243, 255, 0.2);">
+                        <!-- PLACA LED HORIZONTAL COM PISCAR -->
+                        <div class="absolute top-7 left-1/2 -translate-x-1/2 w-[218px] bg-[#0a0c0f] border border-amber-500/30 rounded-2xl p-2.5 shadow-inner" style="box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 0 15px rgba(245, 158, 11, 0.15);">
                             <div class="grid grid-cols-4 gap-1 text-center">
-                                <div><div class="text-[8px] text-cyan-400/70 tracking-widest">GAS</div><div class="font-mono text-cyan-400 text-lg font-black leading-none" style="text-shadow: 0 0 8px rgb(0 243 255 / 0.6);">6,29</div></div>
-                                <div><div class="text-[8px] text-cyan-400/70 tracking-widest">ETA</div><div class="font-mono text-cyan-400 text-lg font-black leading-none" style="text-shadow: 0 0 8px rgb(0 243 255 / 0.6);">4,15</div></div>
-                                <div><div class="text-[8px] text-cyan-400/70 tracking-widest">DIE</div><div class="font-mono text-cyan-400 text-lg font-black leading-none" style="text-shadow: 0 0 8px rgb(0 243 255 / 0.6);">5,89</div></div>
-                                <div><div class="text-[8px] text-cyan-400/70 tracking-widest">GNV</div><div class="font-mono text-cyan-400 text-lg font-black leading-none" style="text-shadow: 0 0 8px rgb(0 243 255 / 0.6);">4,79</div></div>
+                                <div>
+                                    <div class="text-[8px] text-amber-400/70 tracking-widest">GAS</div>
+                                    <div class="font-mono text-amber-400 text-xl font-black leading-none price-blink led-number">6,29</div>
+                                </div>
+                                <div>
+                                    <div class="text-[8px] text-amber-400/70 tracking-widest">ETA</div>
+                                    <div class="font-mono text-amber-400 text-xl font-black leading-none price-blink led-number">4,15</div>
+                                </div>
+                                <div>
+                                    <div class="text-[8px] text-amber-400/70 tracking-widest">DIE</div>
+                                    <div class="font-mono text-amber-400 text-xl font-black leading-none price-blink led-number">5,89</div>
+                                </div>
+                                <div>
+                                    <div class="text-[8px] text-amber-400/70 tracking-widest">GNV</div>
+                                    <div class="font-mono text-amber-400 text-xl font-black leading-none price-blink led-number">4,79</div>
+                                </div>
                             </div>
                         </div>
 
@@ -88,12 +111,12 @@
         <div class="glass rounded-3xl p-10 border border-white/10 futuristic-border">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-y-4 mb-10">
                 <div><h2 class="section-header tracking-tighter">Calculadora de Economia</h2><p class="text-zinc-400 mt-2">Descubra quanto você pode economizar por mês</p></div>
-                <div class="px-5 py-2 rounded-2xl bg-cyan-950/60 border border-cyan-500/20 text-cyan-400 text-sm w-fit">Preços médios de hoje</div>
+                <div class="px-5 py-2 rounded-2xl bg-amber-950/60 border border-amber-500/20 text-amber-400 text-sm w-fit">Preços médios de hoje</div>
             </div>
             <div class="grid lg:grid-cols-2 gap-8">
                 <div class="space-y-6">
-                    <div><label class="text-sm text-zinc-400 block mb-3">Km rodados por mês</label><input id="km-mes" type="number" value="1200" oninput="calcularEconomia()" class="w-full bg-zinc-900 border border-white/10 focus:border-cyan-500/60 rounded-2xl px-7 py-4 text-xl outline-none"></div>
-                    <div><label class="text-sm text-zinc-400 block mb-3">Consumo do carro (km/l)</label><input id="consumo" type="number" value="10" step="0.5" oninput="calcularEconomia()" class="w-full bg-zinc-900 border border-white/10 focus:border-cyan-500/60 rounded-2xl px-7 py-4 text-xl outline-none"></div>
+                    <div><label class="text-sm text-zinc-400 block mb-3">Km rodados por mês</label><input id="km-mes" type="number" value="1200" oninput="calcularEconomia()" class="w-full bg-zinc-900 border border-white/10 focus:border-amber-500/60 rounded-2xl px-7 py-4 text-xl outline-none"></div>
+                    <div><label class="text-sm text-zinc-400 block mb-3">Consumo do carro (km/l)</label><input id="consumo" type="number" value="10" step="0.5" oninput="calcularEconomia()" class="w-full bg-zinc-900 border border-white/10 focus:border-amber-500/60 rounded-2xl px-7 py-4 text-xl outline-none"></div>
                 </div>
                 <div class="space-y-4">
                     <div class="bg-zinc-900/60 border border-white/10 rounded-2xl p-6 flex justify-between items-center"><div><div class="text-sm text-zinc-400">Custo mensal com <span class="font-semibold text-white">Gasolina</span></div><div id="custo-gasolina" class="text-4xl font-semibold mt-2">R$ 754,80</div></div><div class="text-5xl opacity-75">⛽</div></div>
@@ -141,7 +164,7 @@
                 <h2 class="section-header tracking-tighter">Atualize seus preços<br>em segundos</h2>
                 <p class="mt-4 text-lg text-zinc-400">Mantenha seus clientes informados com preços em tempo real.</p>
                 <div class="mt-8 flex gap-4">
-                    <button onclick="abrirModalAtualizacao()" class="px-9 py-4 bg-gradient-to-r from-cyan-500 to-pink-500 text-white font-semibold rounded-3xl">Abrir painel de atualização</button>
+                    <button onclick="abrirModalAtualizacao()" class="px-9 py-4 bg-gradient-to-r from-amber-500 to-cyan-400 text-white font-semibold rounded-3xl">Abrir painel de atualização</button>
                     <button onclick="mostrarComoFunciona()" class="px-8 py-4 border border-white/20 rounded-3xl font-medium">Como funciona?</button>
                 </div>
             </div>
@@ -151,7 +174,7 @@
     <!-- FOOTER -->
     <footer class="border-t border-white/10 bg-black/30">
         <div class="max-w-screen-2xl mx-auto px-8 py-12 text-sm flex flex-col md:flex-row justify-between gap-y-6">
-            <div><div class="font-display text-2xl">Combustíveis Cotação</div><p class="text-zinc-500 mt-1">Desenvolvido por <span class="text-pink-400">Martins Web</span></p></div>
+            <div><div class="font-display text-2xl">Combustíveis Cotação</div><p class="text-zinc-500 mt-1">Desenvolvido por <span class="text-amber-400">Martins Web</span></p></div>
             <div class="text-right text-zinc-400"><div>Recife, Pernambuco</div><div class="text-xs mt-px">© 2026 Todos os direitos reservados</div></div>
         </div>
     </footer>
@@ -167,7 +190,7 @@
                 <div><label class="text-xs text-zinc-400 block mb-1.5">DIESEL S-10</label><input id="preco-diesel" type="text" inputmode="decimal" class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-3.5"></div>
                 <div><label class="text-xs text-zinc-400 block mb-1.5">GNV</label><input id="preco-gnv" type="text" inputmode="decimal" class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-3.5"></div>
             </div>
-            <button onclick="salvarAtualizacao()" class="w-full py-4 bg-gradient-to-r from-cyan-500 to-pink-500 rounded-2xl font-semibold text-lg">Salvar e publicar preços</button>
+            <button onclick="salvarAtualizacao()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-cyan-400 rounded-2xl font-semibold text-lg">Salvar e publicar preços</button>
         </div>
     </div>
 
@@ -214,10 +237,10 @@
             marcadores.forEach(m => mapa.removeLayer(m)); marcadores = [];
             postos.forEach(p => {
                 if (!p.lat) return;
-                const icone = L.divIcon({ html: `<div style="background:#00f3ff; width:20px; height:20px; border-radius:9999px; border:3px solid white; box-shadow:0 0 12px #00f3ff;"></div>`, iconSize: [20,20], iconAnchor: [10,10], popupAnchor: [0,-12] });
+                const icone = L.divIcon({ html: `<div style="background:#f59e0b; width:20px; height:20px; border-radius:9999px; border:3px solid white; box-shadow:0 0 12px #f59e0b;"></div>`, iconSize: [20,20], iconAnchor: [10,10], popupAnchor: [0,-12] });
                 const marker = L.marker([p.lat, p.lng], { icon: icone }).addTo(mapa);
                 const gnvTexto = p.gnv ? `R$ ${p.gnv.toFixed(2)}` : 'Não disponível';
-                marker.bindPopup(`<div style="min-width:220px;"><div style="font-weight:700; font-size:16px; color:#00f3ff;">\( {p.nome}</div><div style="color:#666; font-size:13px;"> \){p.bairro}</div><div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:14px; margin-top:8px;"><div><strong>Gasolina:</strong> R$ \( {p.gasolina.toFixed(2)}</div><div><strong>Etanol:</strong> R \) \( {p.etanol.toFixed(2)}</div><div><strong>Diesel:</strong> R \) ${p.diesel.toFixed(2)}</div><div><strong>GNV:</strong> ${gnvTexto}</div></div></div>`);
+                marker.bindPopup(`<div style="min-width:220px;"><div style="font-weight:700; font-size:16px; color:#f59e0b;">\( {p.nome}</div><div style="color:#666; font-size:13px;"> \){p.bairro}</div><div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:14px; margin-top:8px;"><div><strong>Gasolina:</strong> R$ \( {p.gasolina.toFixed(2)}</div><div><strong>Etanol:</strong> R \) \( {p.etanol.toFixed(2)}</div><div><strong>Diesel:</strong> R \) ${p.diesel.toFixed(2)}</div><div><strong>GNV:</strong> ${gnvTexto}</div></div></div>`);
                 marcadores.push(marker);
             });
         }
@@ -302,30 +325,37 @@
             document.getElementById('economia').innerHTML = 'R$ ' + economia.toFixed(2).replace('.', ',') + '<span class="text-sm font-normal"> (' + maisBarato + ')</span>';
         }
 
-        function iniciarAnimacaoBomba() {
-            const fuelTypeEl = document.getElementById('pump-fuel-type'); const priceEl = document.getElementById('pump-price');
-            if (!fuelTypeEl || !priceEl) return;
-            const fuels = [{ type: "GASOLINA", price: "R$ 6,29" }, { type: "ETANOL", price: "R$ 4,15" }, { type: "DIESEL", price: "R$ 5,89" }, { type: "GNV", price: "R$ 4,79" }];
-            let currentIndex = 0;
-            setInterval(() => {
-                fuelTypeEl.style.transition = 'all 0.3s ease'; priceEl.style.transition = 'all 0.3s ease';
-                fuelTypeEl.style.opacity = '0'; priceEl.style.opacity = '0';
-                setTimeout(() => {
-                    currentIndex = (currentIndex + 1) % fuels.length;
-                    fuelTypeEl.textContent = fuels[currentIndex].type; priceEl.textContent = fuels[currentIndex].price;
-                    fuelTypeEl.style.opacity = '1'; priceEl.style.opacity = '1';
-                }, 300);
-            }, 2600);
+        // ==================== CARREGAR DADOS DA API ====================
+        async function carregarDadosPostos() {
+            try {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(postos);
+                    }, 350);
+                });
+                // Quando tiver API real:
+                // const res = await fetch('https://sua-api.com/postos');
+                // return await res.json();
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                return postos;
+            }
         }
 
-        function inicializar() {
+        async function inicializar() {
+            const dados = await carregarDadosPostos();
+            postos = dados;
+
             renderizarTabela();
             setTimeout(inicializarMapa, 700);
             preencherSelectPostos();
-            const search = document.getElementById('search-input'); if (search) search.addEventListener('input', filtrarTabela);
-            setTimeout(iniciarAnimacaoBomba, 1200);
+
+            const search = document.getElementById('search-input');
+            if (search) search.addEventListener('input', filtrarTabela);
+
             setTimeout(calcularEconomia, 500);
         }
+
         window.onload = inicializar;
     </script>
 </body>
