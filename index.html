@@ -8,123 +8,47 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
-        
-        body {
-            font-family: 'Inter', system_ui, sans-serif;
-        }
-        
-        .font-display {
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-weight: 600;
-        }
-
-        .glass {
-            background: rgba(255,255,255, 0.06);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255, 0.1);
-        }
-
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .glass { background: rgba(255,255,255, 0.06); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255, 0.1); }
         .premium-gradient {
             background: linear-gradient(135deg, #1E3A8A 0%, #DC2626 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .section-header {
-            font-size: 2.25rem;
-            line-height: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-        }
-
-        .fuel-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .fuel-card:hover {
-            transform: translateY(-4px);
-        }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-200">
+
     <!-- NAVBAR -->
     <nav class="sticky top-0 z-50 bg-zinc-950/95 backdrop-blur-xl border-b border-white/10">
-        <div class="max-w-screen-2xl mx-auto">
-            <div class="px-8 py-5 flex items-center justify-between">
-                <!-- Logo -->
-                <div class="flex items-center gap-x-3">
-                    <div class="flex items-center gap-x-2.5">
-                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-700 to-red-600 flex items-center justify-center">
-                            <span class="text-white text-3xl">⛽</span>
-                        </div>
-                        <div>
-                            <span class="font-display text-3xl font-semibold tracking-tighter">Combustíveis</span>
-                            <span class="font-display text-3xl font-semibold tracking-tighter bg-gradient-to-r from-blue-400 to-red-500 bg-clip-text text-transparent">Cotação</span>
-                        </div>
+        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="flex items-center gap-x-2.5">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-700 to-red-600 flex items-center justify-center">
+                        <span class="text-white text-3xl">⛽</span>
+                    </div>
+                    <div>
+                        <span class="font-display text-3xl font-semibold tracking-tighter">Combustíveis</span>
+                        <span class="font-display text-3xl font-semibold tracking-tighter bg-gradient-to-r from-blue-400 to-red-500 bg-clip-text text-transparent">Cotação</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center gap-x-8 text-sm">
-                    <a href="#precos" class="hover:text-white transition-colors">Preços</a>
-                    <a href="#postos" class="hover:text-white transition-colors">Postos</a>
-                    <a href="#mapa" class="hover:text-white transition-colors">Mapa</a>
-                    <a href="#atualizar" class="hover:text-white transition-colors">Atualizar Preços</a>
-                </div>
+            <div class="flex items-center gap-x-3">
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
 
-                <div class="flex items-center gap-x-3">
-                    <!-- Hamburger -->
-                    <button onclick="toggleMobileMenu()" class="md:hidden p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-
-                    <!-- Desktop CTA -->
-                    <button onclick="abrirModalAtualizacao()" 
-                            class="hidden md:flex items-center gap-x-2 px-5 py-2.5 rounded-2xl text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10 transition-all">
-                        <span>Sou dono de posto</span>
-                    </button>
-                </div>
+                <button onclick="abrirModalAtualizacao()" 
+                        class="hidden md:flex items-center gap-x-2 px-5 py-2.5 rounded-2xl text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10">
+                    <span>Sou dono de posto</span>
+                </button>
             </div>
         </div>
     </nav>
-
-    <!-- MOBILE MENU (Slide Lateral) -->
-    <div id="mobile-menu" class="hidden fixed inset-0 z-[60] md:hidden">
-        <div onclick="toggleMobileMenu()" class="absolute inset-0 bg-black/70"></div>
-        
-        <div id="mobile-menu-panel" onclick="event.stopImmediatePropagation()"
-             class="absolute top-0 left-0 h-full w-[82%] max-w-[300px] bg-zinc-950 border-r border-white/10 transform -translate-x-full transition-all duration-300 ease-out">
-            
-            <div class="p-8">
-                <div class="flex justify-between items-center mb-10">
-                    <div class="flex items-center gap-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-700 to-red-600 flex items-center justify-center">
-                            <span class="text-white text-2xl">⛽</span>
-                        </div>
-                        <span class="font-display text-xl">Combustíveis Cotação</span>
-                    </div>
-                    <button onclick="toggleMobileMenu()" class="text-3xl text-zinc-400">×</button>
-                </div>
-
-                <div class="flex flex-col space-y-5 text-lg">
-                    <a href="#precos" onclick="toggleMobileMenu()" class="py-1 hover:text-red-400">Preços</a>
-                    <a href="#postos" onclick="toggleMobileMenu()" class="py-1 hover:text-red-400">Postos</a>
-                    <a href="#mapa" onclick="toggleMobileMenu()" class="py-1 hover:text-red-400">Mapa</a>
-                    <a href="#atualizar" onclick="toggleMobileMenu()" class="py-1 hover:text-red-400">Atualizar Preços</a>
-                    
-                    <div class="pt-8 border-t border-white/10">
-                        <button onclick="abrirModalAtualizacao(); toggleMobileMenu();" 
-                                class="w-full py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-2xl">
-                            Sou dono de posto
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- HERO -->
     <div class="max-w-screen-2xl mx-auto px-8 pt-16 pb-12">
@@ -133,28 +57,30 @@
                 Cotação de combustíveis<br>
                 <span class="premium-gradient">em tempo real.</span>
             </h1>
+            <p class="text-xl text-zinc-400 mb-8 max-w-md">Preços atualizados dos principais postos de Recife e Grande Recife.</p>
             
-            <p class="text-xl text-zinc-400 mb-8 max-w-md">
-                Preços atualizados dos principais postos de Recife e Grande Recife.
-            </p>
-
             <div class="flex flex-col sm:flex-row gap-4">
                 <button onclick="document.getElementById('precos').scrollIntoView({ behavior: 'smooth' })" 
-                        class="px-8 py-4 bg-white text-zinc-950 rounded-3xl font-semibold">
-                    Ver preços agora
-                </button>
+                        class="px-8 py-4 bg-white text-zinc-950 rounded-3xl font-semibold">Ver preços agora</button>
                 <button onclick="abrirModalAtualizacao()" 
-                        class="px-8 py-4 border border-red-500/30 text-red-400 rounded-3xl font-semibold">
-                    Sou dono de posto
-                </button>
+                        class="px-8 py-4 border border-red-500/30 text-red-400 rounded-3xl font-semibold">Sou dono de posto</button>
             </div>
         </div>
     </div>
 
     <!-- PREÇOS MÉDIOS -->
     <div id="precos" class="max-w-screen-2xl mx-auto px-8 pb-16">
-        <h2 class="text-4xl font-bold tracking-tighter mb-8">Preços médios hoje</h2>
-        
+        <div class="flex items-end justify-between mb-8">
+            <h2 class="text-4xl font-bold tracking-tighter">Preços médios hoje</h2>
+            <div class="hidden md:block text-right">
+                <div class="text-xs text-zinc-500">Atualizado há poucos minutos</div>
+                <div class="text-emerald-400 text-sm font-medium flex items-center justify-end gap-x-1">
+                    <span>●</span> 
+                    <span>Fonte: ANP + postos parceiros</span>
+                </div>
+            </div>
+        </div>
+
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div class="glass p-6 rounded-3xl border border-white/10">
                 <div class="text-3xl mb-1">⛽</div>
@@ -179,10 +105,24 @@
         </div>
     </div>
 
-    <!-- TABELA -->
+    <!-- TABELA COM BUSCA -->
     <div id="postos" class="max-w-screen-2xl mx-auto px-8 pb-16">
-        <h2 class="text-4xl font-bold tracking-tighter mb-6">Postos em Recife e região</h2>
-        
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4 mb-6">
+            <h2 class="text-4xl font-bold tracking-tighter">Postos em Recife e região</h2>
+            
+            <!-- Barra de Busca -->
+            <div class="relative w-full md:w-80">
+                <input id="search-input" 
+                       type="text" 
+                       placeholder="Buscar posto ou bairro..." 
+                       oninput="filtrarTabela()"
+                       class="w-full bg-zinc-900 border border-white/10 focus:border-red-500/50 transition-colors rounded-2xl pl-11 py-3 text-sm outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-4 top-3.5 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+        </div>
+
         <div class="glass rounded-3xl border border-white/10 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-sm min-w-[720px]">
@@ -214,16 +154,13 @@
     <div id="atualizar" class="max-w-screen-2xl mx-auto px-8 pb-20">
         <div class="glass rounded-3xl p-10 border border-white/10">
             <h2 class="text-4xl font-bold tracking-tighter">Atualize seus preços em segundos</h2>
-            <p class="mt-3 text-zinc-400">Mantenha seus clientes informados com preços em tempo real.</p>
+            <p class="mt-3 text-zinc-400">Mantenha seus clientes informados. Os preços são atualizados instantaneamente no site para todos os motoristas da região.</p>
             
             <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                <button onclick="abrirModalAtualizacao()" 
-                        class="px-9 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-3xl">
+                <button onclick="abrirModalAtualizacao()" class="px-9 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-3xl">
                     Abrir painel de atualização
                 </button>
-                <button onclick="mostrarComoFunciona()" class="px-8 py-4 border border-white/20 rounded-3xl">
-                    Como funciona?
-                </button>
+                <button onclick="mostrarComoFunciona()" class="px-8 py-4 border border-white/20 rounded-3xl">Como funciona?</button>
             </div>
         </div>
     </div>
@@ -235,9 +172,7 @@
                 <span class="font-display text-xl">Combustíveis Cotação</span>
                 <p class="text-zinc-500 mt-1">Desenvolvido por <span class="text-red-400">Martins Web</span></p>
             </div>
-            <div class="mt-6 md:mt-0 text-zinc-400">
-                Recife, Pernambuco — Brasil
-            </div>
+            <div class="mt-6 md:mt-0 text-zinc-400">Recife, Pernambuco — Brasil</div>
         </div>
     </footer>
 
@@ -252,12 +187,20 @@
 
             <div class="grid grid-cols-2 gap-4 mb-6">
                 <div>
-                    <label class="text-xs text-zinc-400">GASOLINA</label>
-                    <input id="preco-gasolina" type="text" class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-5 py-3 mt-1">
+                    <label class="text-xs text-zinc-400">GASOLINA COMUM</label>
+                    <input id="preco-gasolina" type="text" inputmode="decimal" class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-5 py-3 mt-1">
                 </div>
                 <div>
                     <label class="text-xs text-zinc-400">ETANOL</label>
-                    <input id="preco-etanol" type="text" class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-5 py-3 mt-1">
+                    <input id="preco-etanol" type="text" inputmode="decimal" class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-5 py-3 mt-1">
+                </div>
+                <div>
+                    <label class="text-xs text-zinc-400">DIESEL S-10</label>
+                    <input id="preco-diesel" type="text" inputmode="decimal" class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-5 py-3 mt-1">
+                </div>
+                <div>
+                    <label class="text-xs text-zinc-400">GNV</label>
+                    <input id="preco-gnv" type="text" inputmode="decimal" class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-5 py-3 mt-1">
                 </div>
             </div>
 
@@ -269,28 +212,31 @@
 
     <script>
         let postos = [
-            { id: 1, nome: "Posto Shell Boa Viagem", bairro: "Boa Viagem", lat: -8.1352, lng: -34.9021, gasolina: 6.29, etanol: 4.15, diesel: 5.89, gnv: 4.79 },
-            { id: 2, nome: "Posto Ipiranga Imbiribeira", bairro: "Imbiribeira", lat: -8.1124, lng: -34.8958, gasolina: 6.35, etanol: 4.22, diesel: 5.95, gnv: 4.85 },
-            { id: 3, nome: "Posto BR Casa Forte", bairro: "Casa Forte", lat: -8.0365, lng: -34.9087, gasolina: 6.19, etanol: 4.09, diesel: 5.79, gnv: 4.65 },
-            { id: 4, nome: "Posto Ale Madalena", bairro: "Madalena", lat: -8.0489, lng: -34.9123, gasolina: 6.42, etanol: 4.28, diesel: 6.05, gnv: null },
-            { id: 5, nome: "Posto Shell Graças", bairro: "Graças", lat: -8.0412, lng: -34.8998, gasolina: 6.25, etanol: 4.12, diesel: 5.85, gnv: 4.72 },
-            { id: 6, nome: "Posto Ipiranga Jaboatão", bairro: "Jaboatão", lat: -8.1723, lng: -34.9234, gasolina: 6.15, etanol: 4.05, diesel: 5.75, gnv: 4.60 },
-            { id: 7, nome: "Posto BR Paulista", bairro: "Paulista", lat: -7.9401, lng: -34.8732, gasolina: 6.38, etanol: 4.19, diesel: 5.92, gnv: 4.81 },
-            { id: 8, nome: "Posto Ale Boa Vista", bairro: "Boa Vista", lat: -8.0618, lng: -34.8856, gasolina: 6.22, etanol: 4.11, diesel: 5.82, gnv: null },
-            { id: 9, nome: "Posto Shell Camaragibe", bairro: "Camaragibe", lat: -8.0215, lng: -34.9789, gasolina: 6.09, etanol: 3.98, diesel: 5.69, gnv: 4.55 },
-            { id: 10, nome: "Posto Ipiranga Várzea", bairro: "Várzea", lat: -8.0368, lng: -34.9567, gasolina: 6.31, etanol: 4.17, diesel: 5.91, gnv: 4.77 },
-            { id: 11, nome: "Posto BR Rio Doce", bairro: "Rio Doce", lat: -7.9823, lng: -34.8541, gasolina: 6.27, etanol: 4.14, diesel: 5.87, gnv: 4.70 },
-            { id: 12, nome: "Posto Ale San Martin", bairro: "San Martin", lat: -8.0556, lng: -34.9254, gasolina: 6.44, etanol: 4.25, diesel: 6.02, gnv: null }
+            { id: 1, nome: "Posto Shell Boa Viagem", bairro: "Boa Viagem", lat: -8.1352, lng: -34.9021, gasolina: 6.29, etanol: 4.15, diesel: 5.89, gnv: 4.79, atualizado: "04/06/2026 19:12" },
+            { id: 2, nome: "Posto Ipiranga Imbiribeira", bairro: "Imbiribeira", lat: -8.1124, lng: -34.8958, gasolina: 6.35, etanol: 4.22, diesel: 5.95, gnv: 4.85, atualizado: "04/06/2026 18:45" },
+            { id: 3, nome: "Posto BR Casa Forte", bairro: "Casa Forte", lat: -8.0365, lng: -34.9087, gasolina: 6.19, etanol: 4.09, diesel: 5.79, gnv: 4.65, atualizado: "04/06/2026 17:50" },
+            { id: 4, nome: "Posto Ale Madalena", bairro: "Madalena", lat: -8.0489, lng: -34.9123, gasolina: 6.42, etanol: 4.28, diesel: 6.05, gnv: null, atualizado: "04/06/2026 19:05" },
+            { id: 5, nome: "Posto Shell Graças", bairro: "Graças", lat: -8.0412, lng: -34.8998, gasolina: 6.25, etanol: 4.12, diesel: 5.85, gnv: 4.72, atualizado: "04/06/2026 16:30" },
+            { id: 6, nome: "Posto Ipiranga Jaboatão", bairro: "Jaboatão", lat: -8.1723, lng: -34.9234, gasolina: 6.15, etanol: 4.05, diesel: 5.75, gnv: 4.60, atualizado: "04/06/2026 18:20" },
+            { id: 7, nome: "Posto BR Paulista", bairro: "Paulista", lat: -7.9401, lng: -34.8732, gasolina: 6.38, etanol: 4.19, diesel: 5.92, gnv: 4.81, atualizado: "04/06/2026 15:10" },
+            { id: 8, nome: "Posto Ale Boa Vista", bairro: "Boa Vista", lat: -8.0618, lng: -34.8856, gasolina: 6.22, etanol: 4.11, diesel: 5.82, gnv: null, atualizado: "04/06/2026 19:00" },
+            { id: 9, nome: "Posto Shell Camaragibe", bairro: "Camaragibe", lat: -8.0215, lng: -34.9789, gasolina: 6.09, etanol: 3.98, diesel: 5.69, gnv: 4.55, atualizado: "04/06/2026 14:45" },
+            { id: 10, nome: "Posto Ipiranga Várzea", bairro: "Várzea", lat: -8.0368, lng: -34.9567, gasolina: 6.31, etanol: 4.17, diesel: 5.91, gnv: 4.77, atualizado: "04/06/2026 17:15" },
+            { id: 11, nome: "Posto BR Rio Doce", bairro: "Rio Doce", lat: -7.9823, lng: -34.8541, gasolina: 6.27, etanol: 4.14, diesel: 5.87, gnv: 4.70, atualizado: "04/06/2026 18:55" },
+            { id: 12, nome: "Posto Ale San Martin", bairro: "San Martin", lat: -8.0556, lng: -34.9254, gasolina: 6.44, etanol: 4.25, diesel: 6.02, gnv: null, atualizado: "04/06/2026 13:40" }
         ];
 
         let mapa = null;
+        let marcadores = [];
 
-        function renderizarTabela() {
+        function renderizarTabela(dados = postos) {
             const tbody = document.getElementById('tabela-body');
             tbody.innerHTML = '';
             
-            postos.forEach(p => {
+            dados.forEach(p => {
                 const tr = document.createElement('tr');
+                const gnv = p.gnv ? `R$ ${p.gnv.toFixed(2)}` : '—';
+                
                 tr.innerHTML = `
                     <td class="px-8 py-5">
                         <div class="font-semibold">${p.nome}</div>
@@ -299,21 +245,63 @@
                     <td class="px-4 py-5 text-center">R$ ${p.gasolina.toFixed(2)}</td>
                     <td class="px-4 py-5 text-center">R$ ${p.etanol.toFixed(2)}</td>
                     <td class="px-4 py-5 text-center">R$ ${p.diesel.toFixed(2)}</td>
-                    <td class="px-4 py-5 text-center">\( {p.gnv ? 'R \) ' + p.gnv.toFixed(2) : '—'}</td>
+                    <td class="px-4 py-5 text-center">${gnv}</td>
+                    <td class="px-5 py-5 text-center text-xs text-emerald-400">${p.atualizado}</td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
+        function filtrarTabela() {
+            const termo = document.getElementById('search-input').value.toLowerCase().trim();
+            if (!termo) {
+                renderizarTabela(postos);
+                return;
+            }
+            const filtrados = postos.filter(p => 
+                p.nome.toLowerCase().includes(termo) || p.bairro.toLowerCase().includes(termo)
+            );
+            renderizarTabela(filtrados);
+        }
+
         function inicializarMapa() {
             mapa = L.map('map').setView([-8.05, -34.90], 11);
             L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(mapa);
-            
+            adicionarMarcadores();
+        }
+
+        function adicionarMarcadores() {
+            marcadores.forEach(m => mapa.removeLayer(m));
+            marcadores = [];
+
             postos.forEach(p => {
-                if (p.lat) {
-                    L.marker([p.lat, p.lng]).addTo(mapa)
-                        .bindPopup(`<b>\( {p.nome}</b><br>Gasolina: R \) ${p.gasolina}`);
-                }
+                if (!p.lat) return;
+
+                const icone = L.divIcon({
+                    html: `<div style="background:#DC2626; width:20px; height:20px; border-radius:9999px; border:3px solid white; box-shadow:0 4px 6px rgb(0 0 0 / 0.3);"></div>`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10],
+                    popupAnchor: [0, -12]
+                });
+
+                const marker = L.marker([p.lat, p.lng], { icon: icone }).addTo(mapa);
+
+                const gnvTexto = p.gnv ? `R$ ${p.gnv.toFixed(2)}` : 'Não disponível';
+
+                marker.bindPopup(`
+                    <div style="min-width:220px; font-family:Inter, system-ui;">
+                        <div style="font-weight:700; font-size:16px; color:#DC2626; margin-bottom:4px;">${p.nome}</div>
+                        <div style="color:#666; font-size:13px; margin-bottom:10px;">${p.bairro}</div>
+                        
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:14px;">
+                            <div><strong>Gasolina:</strong> R$ ${p.gasolina.toFixed(2)}</div>
+                            <div><strong>Etanol:</strong> R$ ${p.etanol.toFixed(2)}</div>
+                            <div><strong>Diesel:</strong> R$ ${p.diesel.toFixed(2)}</div>
+                            <div><strong>GNV:</strong> ${gnvTexto}</div>
+                        </div>
+                    </div>
+                `);
+                marcadores.push(marker);
             });
         }
 
@@ -336,6 +324,7 @@
             document.getElementById('preco-gasolina').value = p.gasolina.toFixed(2);
             document.getElementById('preco-etanol').value = p.etanol.toFixed(2);
             document.getElementById('preco-diesel').value = p.diesel.toFixed(2);
+            document.getElementById('preco-gnv').value = p.gnv ? p.gnv.toFixed(2) : '';
         }
 
         function abrirModalAtualizacao() {
@@ -345,9 +334,8 @@
         }
 
         function fecharModal() {
-            const modal = document.getElementById('modal-atualizacao');
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
+            document.getElementById('modal-atualizacao').classList.remove('flex');
+            document.getElementById('modal-atualizacao').classList.add('hidden');
         }
 
         function salvarAtualizacao() {
@@ -358,6 +346,11 @@
             p.gasolina = parseFloat(document.getElementById('preco-gasolina').value) || p.gasolina;
             p.etanol = parseFloat(document.getElementById('preco-etanol').value) || p.etanol;
             p.diesel = parseFloat(document.getElementById('preco-diesel').value) || p.diesel;
+            const gnvVal = document.getElementById('preco-gnv').value;
+            p.gnv = gnvVal ? parseFloat(gnvVal) : null;
+
+            const agora = new Date();
+            p.atualizado = agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
 
             renderizarTabela();
             fecharModal();
@@ -367,7 +360,6 @@
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const panel = document.getElementById('mobile-menu-panel');
-            
             if (!menu || !panel) return;
 
             if (menu.classList.contains('hidden')) {
@@ -378,9 +370,7 @@
             } else {
                 panel.classList.remove('translate-x-0');
                 panel.classList.add('-translate-x-full');
-                setTimeout(() => {
-                    menu.classList.add('hidden');
-                }, 300);
+                setTimeout(() => menu.classList.add('hidden'), 300);
             }
         }
 
@@ -389,18 +379,12 @@
                 <div onclick="this.remove()" class="fixed inset-0 bg-black/80 z-[200] flex items-center justify-center p-6">
                     <div onclick="event.stopImmediatePropagation()" class="glass max-w-md w-full p-8 rounded-3xl">
                         <h3 class="text-2xl font-semibold mb-6">Como funciona para donos de posto</h3>
-                        
                         <div class="space-y-5 text-sm">
                             <div>1. Cadastre seu posto de forma simples</div>
                             <div>2. Atualize seus preços quando quiser</div>
                             <div>3. Os preços são atualizados <strong>em tempo real</strong> no site</div>
                             <div>4. Alcance mais clientes por apenas <strong class="text-yellow-400">R$ 49,90 por mês</strong></div>
                         </div>
-                        
-                        <div class="mt-8 text-sm">
-                            Com o sistema da <strong>Martins Web</strong>, seu posto aparece para milhares de motoristas da região.
-                        </div>
-                        
                         <button onclick="this.closest('.fixed').remove()" class="mt-8 w-full py-3 border border-white/20 rounded-2xl">Fechar</button>
                     </div>
                 </div>`;
@@ -412,23 +396,10 @@
             setTimeout(inicializarMapa, 700);
             preencherSelectPostos();
             
-            // Busca
-            const search = document.createElement('input');
-            search.placeholder = "Buscar posto ou bairro...";
-            search.className = "w-full bg-zinc-900 border border-white/10 rounded-2xl px-5 py-3 mb-4";
-            search.oninput = () => {
-                const termo = search.value.toLowerCase();
-                const filtrados = postos.filter(p => p.nome.toLowerCase().includes(termo) || p.bairro.toLowerCase().includes(termo));
-                const tbody = document.getElementById('tabela-body');
-                tbody.innerHTML = '';
-                filtrados.forEach(p => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `<td class="px-8 py-5">${p.nome} — ${p.bairro}</td>`;
-                    tbody.appendChild(tr);
-                });
-            };
+            const search = document.getElementById('search-input');
+            if (search) search.addEventListener('input', filtrarTabela);
             
-            console.log('%c[Combustíveis Cotação] Site final carregado com sucesso.', 'color:#64748b');
+            console.log('%c[Combustíveis Cotação] Versão final com todos os ajustes.', 'color:#64748b');
         }
 
         window.onload = inicializar;
