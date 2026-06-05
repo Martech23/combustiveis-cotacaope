@@ -24,19 +24,23 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255, 0.1);
         }
-        .toast {
-            animation: slideUp 0.3s ease forwards;
+
+        .fuel-pump-3d {
+            transform-style: preserve-3d;
+            animation: pumpFloat 4s ease-in-out infinite;
         }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .fuel-pump-3d:hover {
+            animation-play-state: paused;
         }
-        .row-updated {
-            animation: highlightRow 2s ease forwards;
+
+        @keyframes pumpFloat {
+            0%, 100% { transform: rotateY(-18deg) rotateX(6deg) translateY(0); }
+            50% { transform: rotateY(-18deg) rotateX(6deg) translateY(-8px); }
         }
-        @keyframes highlightRow {
-            0% { background-color: rgba(220, 38, 38, 0.2); }
-            100% { background-color: transparent; }
+
+        .digital-display {
+            animation: pricePulse 2s ease-in-out infinite;
         }
     </style>
 </head>
@@ -72,20 +76,56 @@
         </div>
     </nav>
 
-    <!-- HERO -->
-    <div class="max-w-screen-2xl mx-auto px-8 pt-16 pb-12">
-        <div class="max-w-3xl">
-            <h1 class="text-6xl md:text-7xl font-display tracking-tighter leading-none mb-6">
-                Cotação de combustíveis<br>
-                <span class="premium-gradient">em tempo real.</span>
-            </h1>
-            <p class="text-xl text-zinc-400 mb-8 max-w-md">Preços atualizados dos principais postos de Recife e Grande Recife.</p>
+    <!-- HERO COM BOMBA 3D -->
+    <div class="max-w-screen-2xl mx-auto px-8 pt-12 pb-16">
+        <div class="grid md:grid-cols-2 gap-x-12 items-center">
             
-            <div class="flex flex-col sm:flex-row gap-4">
-                <button onclick="document.getElementById('precos').scrollIntoView({ behavior: 'smooth' })" 
-                        class="px-8 py-4 bg-white text-zinc-950 rounded-3xl font-semibold">Ver preços agora</button>
-                <button onclick="abrirModalAtualizacao()" 
-                        class="px-8 py-4 border border-red-500/30 text-red-400 rounded-3xl font-semibold">Sou dono de posto</button>
+            <div>
+                <h1 class="text-6xl md:text-7xl font-display tracking-tighter leading-none mb-6">
+                    Cotação de combustíveis<br>
+                    <span class="premium-gradient">em tempo real.</span>
+                </h1>
+                <p class="text-xl text-zinc-400 mb-8 max-w-md">Preços atualizados dos principais postos de Recife e Grande Recife.</p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="document.getElementById('precos').scrollIntoView({ behavior: 'smooth' })" 
+                            class="px-8 py-4 bg-white text-zinc-950 rounded-3xl font-semibold">Ver preços agora</button>
+                    <button onclick="abrirModalAtualizacao()" 
+                            class="px-8 py-4 border border-red-500/30 text-red-400 rounded-3xl font-semibold">Sou dono de posto</button>
+                </div>
+            </div>
+
+            <!-- BOMBA DE COMBUSTÍVEL 3D COM PREÇO ANIMADO -->
+            <div class="hidden md:flex justify-center mt-10 md:mt-0">
+                <div class="relative" style="perspective: 1200px;">
+                    <div class="fuel-pump-3d w-56 h-80 bg-gradient-to-br from-zinc-800 via-zinc-900 to-black rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden"
+                         style="transform: rotateY(-18deg) rotateX(6deg);">
+                        
+                        <!-- Tela Digital com Preço que Muda -->
+                        <div class="absolute top-8 left-1/2 -translate-x-1/2 w-36 h-16 bg-emerald-950 border border-emerald-500/40 rounded-2xl flex items-center justify-center digital-display overflow-hidden">
+                            <div class="text-center">
+                                <div id="pump-fuel-type" class="text-emerald-400/70 text-[10px] tracking-[2px] transition-all duration-300">GASOLINA</div>
+                                <div id="pump-price" class="font-mono text-emerald-400 text-3xl font-bold tracking-tighter transition-all duration-300">R$ 6,29</div>
+                            </div>
+                        </div>
+
+                        <!-- Mangueira -->
+                        <div class="absolute -right-1 top-28 w-7 h-2.5 bg-red-600 rounded-full shadow-lg" style="transform: rotate(35deg);"></div>
+                        
+                        <!-- Bico -->
+                        <div class="absolute -right-7 top-24 w-6 h-9 bg-zinc-700 rounded-xl border border-white/20 flex items-center justify-center" style="transform: rotate(30deg);">
+                            <div class="w-1.5 h-4 bg-zinc-600 rounded"></div>
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 right-0 h-20 bg-black/40 flex items-end justify-center pb-4">
+                            <div class="text-center">
+                                <div class="text-[10px] text-white/40 tracking-[3px]">COMBUSTÍVEL COTAÇÃO</div>
+                            </div>
+                        </div>
+
+                        <div class="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent rounded-3xl pointer-events-none"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -224,16 +264,6 @@
             <button onclick="salvarAtualizacao()" class="w-full py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl font-semibold">
                 Salvar e publicar preços
             </button>
-        </div>
-    </div>
-
-    <!-- TOAST -->
-    <div id="toast-container" class="fixed bottom-6 right-6 z-[99999] hidden">
-        <div class="toast glass border border-emerald-500/30 bg-emerald-950/90 text-emerald-200 px-6 py-4 rounded-2xl flex items-center gap-x-3 shadow-2xl max-w-sm">
-            <div>
-                <div id="toast-titulo" class="font-semibold"></div>
-                <div id="toast-mensagem" class="text-xs text-emerald-300/90"></div>
-            </div>
         </div>
     </div>
 
@@ -401,41 +431,26 @@
             p.atualizado = `${data} ${hora}`;
 
             renderizarTabela();
-            
-            // Destaca a linha atualizada
-            setTimeout(() => {
-                const linhas = document.querySelectorAll('#tabela-body tr');
-                linhas.forEach(linha => {
-                    if (linha.textContent.includes(p.nome)) {
-                        linha.classList.add('row-updated');
-                        setTimeout(() => linha.classList.remove('row-updated'), 2000);
-                    }
-                });
-            }, 100);
-
             fecharModal();
             mostrarToastSucesso("Preços atualizados!", "Os dados foram sincronizados em tempo real.");
         }
 
-        // ==================== TOAST ====================
         function mostrarToastSucesso(titulo, mensagem) {
-            const container = document.getElementById('toast-container');
-            document.getElementById('toast-titulo').textContent = titulo;
-            document.getElementById('toast-mensagem').textContent = mensagem;
-            
-            container.style.display = 'block';
-            container.classList.remove('hidden');
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-6 right-6 z-[99999] toast glass border border-emerald-500/30 bg-emerald-950/90 text-emerald-200 px-6 py-4 rounded-2xl flex items-center gap-x-3 shadow-2xl max-w-sm`;
+            toast.innerHTML = `
+                <div>
+                    <div class="font-semibold">${titulo}</div>
+                    <div class="text-xs text-emerald-300/90">${mensagem}</div>
+                </div>
+            `;
+            document.body.appendChild(toast);
             
             setTimeout(() => {
-                container.style.transition = 'all 0.4s ease';
-                container.style.opacity = '0';
-                
-                setTimeout(() => {
-                    container.style.opacity = '1';
-                    container.style.display = 'none';
-                    container.style.transition = '';
-                }, 400);
-            }, 4500);
+                toast.style.transition = 'all 0.4s ease';
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 400);
+            }, 4200);
         }
 
         function toggleMobileMenu() {
@@ -486,6 +501,41 @@
             document.body.insertAdjacentHTML('beforeend', html);
         }
 
+        // ==================== ANIMAÇÃO DA BOMBA 3D ====================
+        function iniciarAnimacaoBomba() {
+            const fuelTypeEl = document.getElementById('pump-fuel-type');
+            const priceEl = document.getElementById('pump-price');
+
+            if (!fuelTypeEl || !priceEl) return;
+
+            const fuels = [
+                { type: "GASOLINA", price: "R$ 6,29" },
+                { type: "ETANOL",   price: "R$ 4,15" },
+                { type: "DIESEL",   price: "R$ 5,89" },
+                { type: "GNV",      price: "R$ 4,79" }
+            ];
+
+            let currentIndex = 0;
+
+            setInterval(() => {
+                fuelTypeEl.style.transition = 'all 0.3s ease';
+                priceEl.style.transition = 'all 0.3s ease';
+                fuelTypeEl.style.opacity = '0';
+                priceEl.style.opacity = '0';
+
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % fuels.length;
+                    const current = fuels[currentIndex];
+
+                    fuelTypeEl.textContent = current.type;
+                    priceEl.textContent = current.price;
+
+                    fuelTypeEl.style.opacity = '1';
+                    priceEl.style.opacity = '1';
+                }, 300);
+            }, 2600);
+        }
+
         function inicializar() {
             renderizarTabela();
             setTimeout(inicializarMapa, 700);
@@ -493,6 +543,9 @@
             
             const search = document.getElementById('search-input');
             if (search) search.addEventListener('input', filtrarTabela);
+
+            // Inicia a animação da bomba 3D
+            setTimeout(iniciarAnimacaoBomba, 1200);
         }
 
         window.onload = inicializar;
