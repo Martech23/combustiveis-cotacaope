@@ -24,6 +24,20 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255, 0.1);
         }
+        .toast {
+            animation: slideUp 0.3s ease forwards;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .row-updated {
+            animation: highlightRow 2s ease forwards;
+        }
+        @keyframes highlightRow {
+            0% { background-color: rgba(220, 38, 38, 0.2); }
+            100% { background-color: transparent; }
+        }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-200">
@@ -118,7 +132,7 @@
         </div>
     </div>
 
-    <!-- TABELA COM DATA E HORA -->
+    <!-- TABELA -->
     <div id="postos" class="max-w-screen-2xl mx-auto px-8 pb-16">
         <h2 class="text-4xl font-bold tracking-tighter mb-6">Postos em Recife e região</h2>
         <div class="glass rounded-3xl border border-white/10 overflow-hidden">
@@ -213,6 +227,16 @@
         </div>
     </div>
 
+    <!-- TOAST -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[99999] hidden">
+        <div class="toast glass border border-emerald-500/30 bg-emerald-950/90 text-emerald-200 px-6 py-4 rounded-2xl flex items-center gap-x-3 shadow-2xl max-w-sm">
+            <div>
+                <div id="toast-titulo" class="font-semibold"></div>
+                <div id="toast-mensagem" class="text-xs text-emerald-300/90"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         let postos = [
             { id: 1, nome: "Posto Shell Boa Viagem", bairro: "Boa Viagem", lat: -8.1352, lng: -34.9021, gasolina: 6.29, etanol: 4.15, diesel: 5.89, gnv: 4.79, atualizado: "04/06 19:12" },
@@ -304,9 +328,6 @@
                             <div><strong>Diesel:</strong> R$ ${p.diesel.toFixed(2)}</div>
                             <div><strong>GNV:</strong> ${gnvTexto}</div>
                         </div>
-                        <div style="margin-top: 8px; font-size: 11px; color: #4ade80;">
-                            Atualizado: ${p.atualizado}
-                        </div>
                     </div>
                 `);
                 marcadores.push(marker);
@@ -374,15 +395,47 @@
             const gnvVal = document.getElementById('preco-gnv').value;
             p.gnv = gnvVal ? parseFloat(gnvVal) : null;
 
-            // Atualiza com data e hora
             const agora = new Date();
             const data = agora.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
             const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             p.atualizado = `${data} ${hora}`;
 
             renderizarTabela();
+            
+            // Destaca a linha atualizada
+            setTimeout(() => {
+                const linhas = document.querySelectorAll('#tabela-body tr');
+                linhas.forEach(linha => {
+                    if (linha.textContent.includes(p.nome)) {
+                        linha.classList.add('row-updated');
+                        setTimeout(() => linha.classList.remove('row-updated'), 2000);
+                    }
+                });
+            }, 100);
+
             fecharModal();
-            alert("Preços atualizados com sucesso!");
+            mostrarToastSucesso("Preços atualizados!", "Os dados foram sincronizados em tempo real.");
+        }
+
+        // ==================== TOAST ====================
+        function mostrarToastSucesso(titulo, mensagem) {
+            const container = document.getElementById('toast-container');
+            document.getElementById('toast-titulo').textContent = titulo;
+            document.getElementById('toast-mensagem').textContent = mensagem;
+            
+            container.style.display = 'block';
+            container.classList.remove('hidden');
+            
+            setTimeout(() => {
+                container.style.transition = 'all 0.4s ease';
+                container.style.opacity = '0';
+                
+                setTimeout(() => {
+                    container.style.opacity = '1';
+                    container.style.display = 'none';
+                    container.style.transition = '';
+                }, 400);
+            }, 4500);
         }
 
         function toggleMobileMenu() {
