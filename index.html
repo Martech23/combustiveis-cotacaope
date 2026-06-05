@@ -24,23 +24,13 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255, 0.1);
         }
-
         .fuel-pump-3d {
             transform-style: preserve-3d;
             animation: pumpFloat 4s ease-in-out infinite;
         }
-
-        .fuel-pump-3d:hover {
-            animation-play-state: paused;
-        }
-
         @keyframes pumpFloat {
             0%, 100% { transform: rotateY(-18deg) rotateX(6deg) translateY(0); }
             50% { transform: rotateY(-18deg) rotateX(6deg) translateY(-8px); }
-        }
-
-        .digital-display {
-            animation: pricePulse 2s ease-in-out infinite;
         }
     </style>
 </head>
@@ -79,7 +69,6 @@
     <!-- HERO COM BOMBA 3D -->
     <div class="max-w-screen-2xl mx-auto px-8 pt-12 pb-16">
         <div class="grid md:grid-cols-2 gap-x-12 items-center">
-            
             <div>
                 <h1 class="text-6xl md:text-7xl font-display tracking-tighter leading-none mb-6">
                     Cotação de combustíveis<br>
@@ -95,35 +84,88 @@
                 </div>
             </div>
 
-            <!-- BOMBA DE COMBUSTÍVEL 3D COM PREÇO ANIMADO -->
+            <!-- BOMBA 3D -->
             <div class="hidden md:flex justify-center mt-10 md:mt-0">
                 <div class="relative" style="perspective: 1200px;">
                     <div class="fuel-pump-3d w-56 h-80 bg-gradient-to-br from-zinc-800 via-zinc-900 to-black rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden"
                          style="transform: rotateY(-18deg) rotateX(6deg);">
                         
-                        <!-- Tela Digital com Preço que Muda -->
-                        <div class="absolute top-8 left-1/2 -translate-x-1/2 w-36 h-16 bg-emerald-950 border border-emerald-500/40 rounded-2xl flex items-center justify-center digital-display overflow-hidden">
+                        <div class="absolute top-8 left-1/2 -translate-x-1/2 w-36 h-16 bg-emerald-950 border border-emerald-500/40 rounded-2xl flex items-center justify-center overflow-hidden">
                             <div class="text-center">
-                                <div id="pump-fuel-type" class="text-emerald-400/70 text-[10px] tracking-[2px] transition-all duration-300">GASOLINA</div>
-                                <div id="pump-price" class="font-mono text-emerald-400 text-3xl font-bold tracking-tighter transition-all duration-300">R$ 6,29</div>
+                                <div id="pump-fuel-type" class="text-emerald-400/70 text-[10px] tracking-[2px] transition-all">GASOLINA</div>
+                                <div id="pump-price" class="font-mono text-emerald-400 text-3xl font-bold tracking-tighter transition-all">R$ 6,29</div>
                             </div>
                         </div>
 
-                        <!-- Mangueira -->
                         <div class="absolute -right-1 top-28 w-7 h-2.5 bg-red-600 rounded-full shadow-lg" style="transform: rotate(35deg);"></div>
-                        
-                        <!-- Bico -->
                         <div class="absolute -right-7 top-24 w-6 h-9 bg-zinc-700 rounded-xl border border-white/20 flex items-center justify-center" style="transform: rotate(30deg);">
                             <div class="w-1.5 h-4 bg-zinc-600 rounded"></div>
                         </div>
 
                         <div class="absolute bottom-0 left-0 right-0 h-20 bg-black/40 flex items-end justify-center pb-4">
-                            <div class="text-center">
-                                <div class="text-[10px] text-white/40 tracking-[3px]">COMBUSTÍVEL COTAÇÃO</div>
-                            </div>
+                            <div class="text-center"><div class="text-[10px] text-white/40 tracking-[3px]">COMBUSTÍVEL COTAÇÃO</div></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                        <div class="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent rounded-3xl pointer-events-none"></div>
+    <!-- CALCULADORA DE ECONOMIA -->
+    <div class="max-w-screen-2xl mx-auto px-8 pb-16">
+        <div class="glass rounded-3xl border border-white/10 p-8 md:p-10">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-y-4 mb-8">
+                <div>
+                    <h2 class="text-4xl font-bold tracking-tighter">Calculadora de Economia</h2>
+                    <p class="text-zinc-400 mt-1">Descubra quanto você pode economizar por mês</p>
+                </div>
+                <div class="text-xs text-emerald-400 bg-emerald-950/50 px-4 py-2 rounded-2xl border border-emerald-500/20 w-fit">
+                    Baseado nos preços médios de hoje
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Inputs -->
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm text-zinc-400 mb-2">Quantos km você roda por mês?</label>
+                        <input id="km-mes" type="number" value="1200" oninput="calcularEconomia()"
+                               class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 text-lg focus:border-red-500/50 outline-none">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm text-zinc-400 mb-2">Consumo do seu carro (km por litro)</label>
+                        <input id="consumo" type="number" value="10" step="0.1" oninput="calcularEconomia()"
+                               class="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 text-lg focus:border-red-500/50 outline-none">
+                    </div>
+                </div>
+
+                <!-- Resultados -->
+                <div class="space-y-4">
+                    <div class="bg-zinc-900/70 border border-white/10 rounded-2xl p-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="text-sm text-zinc-400">Custo com <span class="font-semibold text-white">Gasolina</span></div>
+                                <div id="custo-gasolina" class="text-3xl font-bold text-white mt-1">R$ 754,80</div>
+                            </div>
+                            <div class="text-4xl">⛽</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-zinc-900/70 border border-white/10 rounded-2xl p-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="text-sm text-zinc-400">Custo com <span class="font-semibold text-white">Etanol</span></div>
+                                <div id="custo-etanol" class="text-3xl font-bold text-white mt-1">R$ 498,00</div>
+                            </div>
+                            <div class="text-4xl">🌱</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-2xl p-6">
+                        <div class="text-emerald-400 text-sm">Você pode economizar por mês</div>
+                        <div id="economia" class="text-4xl font-bold text-emerald-400 mt-1">R$ 256,80</div>
+                        <div class="text-xs text-emerald-400/70 mt-1">Escolhendo o combustível mais vantajoso</div>
                     </div>
                 </div>
             </div>
@@ -501,6 +543,34 @@
             document.body.insertAdjacentHTML('beforeend', html);
         }
 
+        // ==================== CALCULADORA DE ECONOMIA ====================
+        function calcularEconomia() {
+            const kmMes = parseFloat(document.getElementById('km-mes').value) || 0;
+            const consumo = parseFloat(document.getElementById('consumo').value) || 0;
+
+            if (kmMes === 0 || consumo === 0) {
+                document.getElementById('custo-gasolina').textContent = 'R$ 0,00';
+                document.getElementById('custo-etanol').textContent = 'R$ 0,00';
+                document.getElementById('economia').textContent = 'R$ 0,00';
+                return;
+            }
+
+            const precoGasolina = 6.29;
+            const precoEtanol = 4.15;
+
+            const litrosMes = kmMes / consumo;
+
+            const custoGasolina = litrosMes * precoGasolina;
+            const custoEtanol = litrosMes * precoEtanol;
+
+            const economia = Math.abs(custoGasolina - custoEtanol);
+            const maisBarato = custoEtanol < custoGasolina ? 'Etanol' : 'Gasolina';
+
+            document.getElementById('custo-gasolina').textContent = 'R$ ' + custoGasolina.toFixed(2).replace('.', ',');
+            document.getElementById('custo-etanol').textContent = 'R$ ' + custoEtanol.toFixed(2).replace('.', ',');
+            document.getElementById('economia').innerHTML = `R$ \( {economia.toFixed(2).replace('.', ',')}<span class="text-sm font-normal"> ( \){maisBarato})</span>`;
+        }
+
         // ==================== ANIMAÇÃO DA BOMBA 3D ====================
         function iniciarAnimacaoBomba() {
             const fuelTypeEl = document.getElementById('pump-fuel-type');
@@ -544,8 +614,8 @@
             const search = document.getElementById('search-input');
             if (search) search.addEventListener('input', filtrarTabela);
 
-            // Inicia a animação da bomba 3D
             setTimeout(iniciarAnimacaoBomba, 1200);
+            setTimeout(calcularEconomia, 500);
         }
 
         window.onload = inicializar;
