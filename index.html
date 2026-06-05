@@ -57,15 +57,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- BOMBA 3D COM PLACA LED -->
             <div class="md:col-span-5 mt-12 md:mt-0 flex justify-center">
                 <div class="relative" style="perspective: 1400px;">
                     <div class="fuel-pump-3d w-64 h-[340px] bg-gradient-to-br from-zinc-900 to-black rounded-3xl border border-white/10 relative overflow-hidden" style="transform: rotateY(-22deg) rotateX(8deg);">
-                        <div class="absolute top-9 left-1/2 -translate-x-1/2 w-40 h-20 bg-black border border-emerald-500/30 rounded-2xl flex items-center justify-center overflow-hidden">
-                            <div class="text-center">
-                                <div id="pump-fuel-type" class="text-emerald-400/70 text-xs tracking-[3px] font-medium">GASOLINA</div>
-                                <div id="pump-price" class="font-mono text-emerald-400 text-[42px] font-bold tracking-[-2.5px] leading-none mt-0.5">R$ 6,29</div>
+                        
+                        <!-- PLACA DIGITAL DE POSTO (LED REAL) -->
+                        <div class="absolute top-8 left-1/2 -translate-x-1/2 w-[170px] h-[78px] bg-[#0a0c0f] border border-emerald-900/60 rounded-2xl flex items-center justify-center overflow-hidden shadow-inner"
+                             style="box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(16, 185, 129, 0.15);">
+                            
+                            <div class="text-center px-3 w-full">
+                                <div id="pump-fuel-type" class="text-emerald-400 text-[10px] font-bold tracking-[3.5px] mb-0.5 transition-all duration-300" style="text-shadow: 0 0 8px rgb(52 211 153 / 0.6);">GASOLINA</div>
+                                <div id="pump-price" class="font-mono text-emerald-400 text-[38px] font-black tracking-[-1.5px] leading-none transition-all duration-300" style="text-shadow: 0 0 12px rgb(52 211 153 / 0.7), 0 0 22px rgb(52 211 153 / 0.4);">R$ 6,29</div>
                             </div>
                         </div>
+
                         <div class="absolute -right-2 top-32 w-8 h-3 bg-red-600 rounded-full" style="transform: rotate(38deg);"></div>
                         <div class="absolute -right-8 top-28 w-7 h-10 bg-zinc-800 rounded-2xl border border-white/10 flex items-center justify-center" style="transform: rotate(32deg);"><div class="w-2 h-5 bg-zinc-700 rounded"></div></div>
                         <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -80,10 +87,7 @@
     <div class="max-w-screen-2xl mx-auto px-8 pb-20">
         <div class="glass rounded-3xl p-10 border border-white/10">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-y-4 mb-10">
-                <div>
-                    <h2 class="section-header tracking-tighter">Calculadora de Economia</h2>
-                    <p class="text-zinc-400 mt-2">Descubra quanto você pode economizar todo mês</p>
-                </div>
+                <div><h2 class="section-header tracking-tighter">Calculadora de Economia</h2><p class="text-zinc-400 mt-2">Descubra quanto você pode economizar todo mês</p></div>
                 <div class="px-5 py-2 rounded-2xl bg-emerald-950/60 border border-emerald-500/20 text-emerald-400 text-sm w-fit">Preços médios de hoje em Recife</div>
             </div>
             <div class="grid lg:grid-cols-2 gap-8">
