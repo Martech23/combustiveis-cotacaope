@@ -125,7 +125,6 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Inputs -->
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm text-zinc-400 mb-2">Quantos km você roda por mês?</label>
@@ -140,7 +139,6 @@
                     </div>
                 </div>
 
-                <!-- Resultados -->
                 <div class="space-y-4">
                     <div class="bg-zinc-900/70 border border-white/10 rounded-2xl p-6">
                         <div class="flex justify-between items-center">
@@ -551,7 +549,7 @@
             if (kmMes === 0 || consumo === 0) {
                 document.getElementById('custo-gasolina').textContent = 'R$ 0,00';
                 document.getElementById('custo-etanol').textContent = 'R$ 0,00';
-                document.getElementById('economia').textContent = 'R$ 0,00';
+                document.getElementById('economia').innerHTML = 'R$ 0,00';
                 return;
             }
 
@@ -568,7 +566,10 @@
 
             document.getElementById('custo-gasolina').textContent = 'R$ ' + custoGasolina.toFixed(2).replace('.', ',');
             document.getElementById('custo-etanol').textContent = 'R$ ' + custoEtanol.toFixed(2).replace('.', ',');
-            document.getElementById('economia').innerHTML = `R$ \( {economia.toFixed(2).replace('.', ',')}<span class="text-sm font-normal"> ( \){maisBarato})</span>`;
+
+            const economiaEl = document.getElementById('economia');
+            economiaEl.innerHTML = 'R$ ' + economia.toFixed(2).replace('.', ',') + 
+                '<span class="text-sm font-normal"> (' + maisBarato + ')</span>';
         }
 
         // ==================== ANIMAÇÃO DA BOMBA 3D ====================
