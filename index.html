@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <!-- PREÇOS MÉDIOS + COMPARTILHAMENTO -->
+    <!-- PREÇOS MÉDIOS -->
     <div id="precos" class="max-w-screen-2xl mx-auto px-8 pb-16">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4 mb-8">
             <div>
@@ -84,7 +84,6 @@
                 <div class="hidden md:block text-xs text-zinc-500 mt-1">Atualizado há poucos minutos • Fonte: ANP + postos parceiros</div>
             </div>
             
-            <!-- Botão de Compartilhamento -->
             <button onclick="compartilharWhatsApp()" 
                     class="flex items-center gap-x-2 px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-all w-fit">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -119,7 +118,7 @@
         </div>
     </div>
 
-    <!-- TABELA -->
+    <!-- TABELA COM DATA E HORA -->
     <div id="postos" class="max-w-screen-2xl mx-auto px-8 pb-16">
         <h2 class="text-4xl font-bold tracking-tighter mb-6">Postos em Recife e região</h2>
         <div class="glass rounded-3xl border border-white/10 overflow-hidden">
@@ -132,7 +131,7 @@
                             <th class="px-4 py-5">Etanol</th>
                             <th class="px-4 py-5">Diesel</th>
                             <th class="px-4 py-5">GNV</th>
-                            <th class="px-5 py-5">Atualizado</th>
+                            <th class="px-6 py-5 text-center">Atualizado</th>
                         </tr>
                     </thead>
                     <tbody id="tabela-body" class="divide-y divide-white/10"></tbody>
@@ -216,18 +215,18 @@
 
     <script>
         let postos = [
-            { id: 1, nome: "Posto Shell Boa Viagem", bairro: "Boa Viagem", lat: -8.1352, lng: -34.9021, gasolina: 6.29, etanol: 4.15, diesel: 5.89, gnv: 4.79 },
-            { id: 2, nome: "Posto Ipiranga Imbiribeira", bairro: "Imbiribeira", lat: -8.1124, lng: -34.8958, gasolina: 6.35, etanol: 4.22, diesel: 5.95, gnv: 4.85 },
-            { id: 3, nome: "Posto BR Casa Forte", bairro: "Casa Forte", lat: -8.0365, lng: -34.9087, gasolina: 6.19, etanol: 4.09, diesel: 5.79, gnv: 4.65 },
-            { id: 4, nome: "Posto Ale Madalena", bairro: "Madalena", lat: -8.0489, lng: -34.9123, gasolina: 6.42, etanol: 4.28, diesel: 6.05, gnv: null },
-            { id: 5, nome: "Posto Shell Graças", bairro: "Graças", lat: -8.0412, lng: -34.8998, gasolina: 6.25, etanol: 4.12, diesel: 5.85, gnv: 4.72 },
-            { id: 6, nome: "Posto Ipiranga Jaboatão", bairro: "Jaboatão", lat: -8.1723, lng: -34.9234, gasolina: 6.15, etanol: 4.05, diesel: 5.75, gnv: 4.60 },
-            { id: 7, nome: "Posto BR Paulista", bairro: "Paulista", lat: -7.9401, lng: -34.8732, gasolina: 6.38, etanol: 4.19, diesel: 5.92, gnv: 4.81 },
-            { id: 8, nome: "Posto Ale Boa Vista", bairro: "Boa Vista", lat: -8.0618, lng: -34.8856, gasolina: 6.22, etanol: 4.11, diesel: 5.82, gnv: null },
-            { id: 9, nome: "Posto Shell Camaragibe", bairro: "Camaragibe", lat: -8.0215, lng: -34.9789, gasolina: 6.09, etanol: 3.98, diesel: 5.69, gnv: 4.55 },
-            { id: 10, nome: "Posto Ipiranga Várzea", bairro: "Várzea", lat: -8.0368, lng: -34.9567, gasolina: 6.31, etanol: 4.17, diesel: 5.91, gnv: 4.77 },
-            { id: 11, nome: "Posto BR Rio Doce", bairro: "Rio Doce", lat: -7.9823, lng: -34.8541, gasolina: 6.27, etanol: 4.14, diesel: 5.87, gnv: 4.70 },
-            { id: 12, nome: "Posto Ale San Martin", bairro: "San Martin", lat: -8.0556, lng: -34.9254, gasolina: 6.44, etanol: 4.25, diesel: 6.02, gnv: null }
+            { id: 1, nome: "Posto Shell Boa Viagem", bairro: "Boa Viagem", lat: -8.1352, lng: -34.9021, gasolina: 6.29, etanol: 4.15, diesel: 5.89, gnv: 4.79, atualizado: "04/06 19:12" },
+            { id: 2, nome: "Posto Ipiranga Imbiribeira", bairro: "Imbiribeira", lat: -8.1124, lng: -34.8958, gasolina: 6.35, etanol: 4.22, diesel: 5.95, gnv: 4.85, atualizado: "04/06 18:45" },
+            { id: 3, nome: "Posto BR Casa Forte", bairro: "Casa Forte", lat: -8.0365, lng: -34.9087, gasolina: 6.19, etanol: 4.09, diesel: 5.79, gnv: 4.65, atualizado: "04/06 17:50" },
+            { id: 4, nome: "Posto Ale Madalena", bairro: "Madalena", lat: -8.0489, lng: -34.9123, gasolina: 6.42, etanol: 4.28, diesel: 6.05, gnv: null, atualizado: "04/06 19:05" },
+            { id: 5, nome: "Posto Shell Graças", bairro: "Graças", lat: -8.0412, lng: -34.8998, gasolina: 6.25, etanol: 4.12, diesel: 5.85, gnv: 4.72, atualizado: "04/06 16:30" },
+            { id: 6, nome: "Posto Ipiranga Jaboatão", bairro: "Jaboatão", lat: -8.1723, lng: -34.9234, gasolina: 6.15, etanol: 4.05, diesel: 5.75, gnv: 4.60, atualizado: "04/06 18:20" },
+            { id: 7, nome: "Posto BR Paulista", bairro: "Paulista", lat: -7.9401, lng: -34.8732, gasolina: 6.38, etanol: 4.19, diesel: 5.92, gnv: 4.81, atualizado: "04/06 15:10" },
+            { id: 8, nome: "Posto Ale Boa Vista", bairro: "Boa Vista", lat: -8.0618, lng: -34.8856, gasolina: 6.22, etanol: 4.11, diesel: 5.82, gnv: null, atualizado: "04/06 19:00" },
+            { id: 9, nome: "Posto Shell Camaragibe", bairro: "Camaragibe", lat: -8.0215, lng: -34.9789, gasolina: 6.09, etanol: 3.98, diesel: 5.69, gnv: 4.55, atualizado: "04/06 14:45" },
+            { id: 10, nome: "Posto Ipiranga Várzea", bairro: "Várzea", lat: -8.0368, lng: -34.9567, gasolina: 6.31, etanol: 4.17, diesel: 5.91, gnv: 4.77, atualizado: "04/06 17:15" },
+            { id: 11, nome: "Posto BR Rio Doce", bairro: "Rio Doce", lat: -7.9823, lng: -34.8541, gasolina: 6.27, etanol: 4.14, diesel: 5.87, gnv: 4.70, atualizado: "04/06 18:55" },
+            { id: 12, nome: "Posto Ale San Martin", bairro: "San Martin", lat: -8.0556, lng: -34.9254, gasolina: 6.44, etanol: 4.25, diesel: 6.02, gnv: null, atualizado: "04/06 13:40" }
         ];
 
         let mapa = null;
@@ -250,7 +249,9 @@
                     <td class="px-4 py-5 text-center">R$ ${p.etanol.toFixed(2)}</td>
                     <td class="px-4 py-5 text-center">R$ ${p.diesel.toFixed(2)}</td>
                     <td class="px-4 py-5 text-center">${gnv}</td>
-                    <td class="px-5 py-5 text-center text-xs text-emerald-400">${p.atualizado || 'Hoje'}</td>
+                    <td class="px-6 py-5 text-center">
+                        <div class="text-xs text-emerald-400 font-mono">${p.atualizado}</div>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -302,6 +303,9 @@
                             <div><strong>Etanol:</strong> R$ ${p.etanol.toFixed(2)}</div>
                             <div><strong>Diesel:</strong> R$ ${p.diesel.toFixed(2)}</div>
                             <div><strong>GNV:</strong> ${gnvTexto}</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 11px; color: #4ade80;">
+                            Atualizado: ${p.atualizado}
                         </div>
                     </div>
                 `);
@@ -370,27 +374,15 @@
             const gnvVal = document.getElementById('preco-gnv').value;
             p.gnv = gnvVal ? parseFloat(gnvVal) : null;
 
+            // Atualiza com data e hora
             const agora = new Date();
-            p.atualizado = agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+            const data = agora.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+            const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            p.atualizado = `${data} ${hora}`;
 
             renderizarTabela();
             fecharModal();
             alert("Preços atualizados com sucesso!");
-        }
-
-        // ==================== COMPARTILHAMENTO ====================
-        function compartilharWhatsApp() {
-            const mensagem = 
-                `⛽ *Preços de Combustíveis em Recife*\n\n` +
-                `Gasolina: R$ 6,29\n` +
-                `Etanol: R$ 4,15\n` +
-                `Diesel S-10: R$ 5,89\n` +
-                `GNV: R$ 4,79\n\n` +
-                `Confira os preços atualizados:\n` +
-                `https://combustiveis-cotacao.vercel.app`;
-
-            const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`;
-            window.open(url, '_blank');
         }
 
         function toggleMobileMenu() {
@@ -408,6 +400,20 @@
                 panel.classList.add('-translate-x-full');
                 setTimeout(() => menu.classList.add('hidden'), 300);
             }
+        }
+
+        function compartilharWhatsApp() {
+            const mensagem = 
+                `⛽ *Preços de Combustíveis em Recife*\n\n` +
+                `Gasolina: R$ 6,29\n` +
+                `Etanol: R$ 4,15\n` +
+                `Diesel S-10: R$ 5,89\n` +
+                `GNV: R$ 4,79\n\n` +
+                `Confira os preços atualizados:\n` +
+                window.location.href;
+
+            const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`;
+            window.open(url, '_blank');
         }
 
         function mostrarComoFunciona() {
